@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <EditText
+        android:id="@+id/account"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:ems="10"
+        android:hint="请输入账号"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="请输入密码"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/account" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:fontFamily="serif"
+        android:text="欢迎使用校园小助手"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="300dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="50dp"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/line"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/line"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="人脸登录"
+        app:layout_constraintBottom_toBottomOf="@+id/line1"
+        app:layout_constraintEnd_toStartOf="@+id/line2"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toEndOf="@+id/line1"
+        app:layout_constraintTop_toTopOf="@+id/line1" />
+
+    <ImageView
+        android:id="@+id/startrecogn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/startrecogn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="忘记密码"
+        app:layout_constraintEnd_toEndOf="@+id/login_btn"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
