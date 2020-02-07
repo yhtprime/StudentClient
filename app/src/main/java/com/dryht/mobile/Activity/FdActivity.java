@@ -125,7 +125,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     Rect facerect = null;
     //人脸垫子
     Mat faceimage = null;
-
+    private String baseUrl=null;
     //请求状态码
     private static int REQUEST_PERMISSION_CODE = 1;
 
@@ -138,6 +138,10 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         mHandler = new Handler();
         //获取flag判断是录入还是识别
         limit =  getIntent().getIntExtra("flag",1);
+        if(limit>1)
+            baseUrl = "recordfacedata/";
+        else
+            baseUrl = "facelogin/";
         checkPermission();
         //初始化控件
         initComponent();
@@ -368,7 +372,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                 builder.addFormDataPart("img",filename.get(i),fileBody);
                             }
                         Request mRequest=new Request.Builder()
-                                .url(com.dryht.mobile.Util.Utils.generalUrl+"facelogin/")
+                                .url(com.dryht.mobile.Util.Utils.generalUrl+baseUrl)
                                 .post(builder.build())
                                 .build();
 
