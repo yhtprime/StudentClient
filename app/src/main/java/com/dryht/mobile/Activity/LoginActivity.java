@@ -124,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             //步骤3：将获取过来的值放入文件
                             editor.putString("authen", result.get("authen").toString());
+                            editor.putString("identity", result.get("identity").toString());
                             //步骤4：提交
                             editor.commit();
                         }

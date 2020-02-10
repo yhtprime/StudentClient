@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp" >
+
+    <ImageView
+        android:id="@+id/nav_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_border"
+        android:src="@drawable/homec">
+    </ImageView>
+    <ImageView
+        android:id="@+id/nav_class"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_border"
+        android:src="@drawable/classn">
+    </ImageView>
+    <ImageView
+        android:id="@+id/nav_friend"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_border"
+        android:src="@drawable/friend">
+    </ImageView>
+    <ImageView
+        android:id="@+id/nav_notice"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_border"
+        android:src="@drawable/notice">
+    </ImageView>
+    <ImageView
+        android:id="@+id/nav_me"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/bg_border"
+        android:src="@drawable/me">
+    </ImageView>
+</LinearLayout>
+
