@@ -15,11 +15,14 @@ import com.dryht.mobile.Adapter.HomePageAdapter;
 import com.dryht.mobile.Fragment.ClassFragment;
 import com.dryht.mobile.Fragment.FriendFragment;
 import com.dryht.mobile.Fragment.HomeSFragment;
+import com.dryht.mobile.Fragment.HomeTFragment;
 import com.dryht.mobile.Fragment.MeSFragment;
+import com.dryht.mobile.Fragment.MeTFragment;
 import com.dryht.mobile.Fragment.NavBarFragment;
 import com.dryht.mobile.Fragment.NoticeFragment;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.NoScrollViewPager;
+import com.xuexiang.xui.XUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             //这里放老师的界面
+            fragmentlist .add(new HomeTFragment());
+            fragmentlist .add(new ClassFragment());
+            fragmentlist .add(new FriendFragment());
+            fragmentlist .add(new NoticeFragment());
+            fragmentlist .add(new MeTFragment());
         }
         //进入适配器进行绑定
         HomePageAdapter adapter = new HomePageAdapter(this, fragmentlist, supportFragmentManager);

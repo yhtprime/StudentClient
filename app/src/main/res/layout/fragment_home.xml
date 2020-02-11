@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
 android:layout_height="match_parent">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="home"></TextView>
+    <com.xuexiang.xui.widget.textview.MarqueeTextView
+        android:id="@+id/tv_marquee"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:mtv_isAutoDisplay="true"
+        app:mtv_isAutoFit="true" />
+
+    <com.xuexiang.xui.widget.banner.recycler.BannerLayout
+        android:id="@+id/home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:bl_autoPlaying="true"
+        app:bl_centerScale="1.3"
+        app:bl_interval="2000"
+        app:bl_itemSpace="10dp"
+        app:bl_moveSpeed="0.7"
+        app:bl_showIndicator="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_marquee" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

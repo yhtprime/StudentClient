@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
+import com.xuexiang.xui.widget.button.ButtonView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText account;
     private EditText password;
     private TextView forget;
-    private Button login;
+    private ButtonView login;
     private ImageView startrecogn;
 
     @Override
@@ -124,9 +125,12 @@ public class LoginActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             //步骤3：将获取过来的值放入文件
                             editor.putString("authen", result.get("authen").toString());
+                            //获取登录人得身份1为学生0为老师
                             editor.putString("identity", result.get("identity").toString());
                             //步骤4：提交
                             editor.commit();
+                            Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                            startActivity(intent);
                         }
                         else
                         {

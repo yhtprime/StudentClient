@@ -60,7 +60,7 @@ public class NavBarFragment extends Fragment {
         public swicthpage(int i) {
             flag = i;
         }
-        //把所有图片变成灰色
+        //把所有图标变成灰色
         private void makeAllGray(){
             home.setImageDrawable(getResources().getDrawable(R.drawable.home));
             classes.setImageDrawable(getResources().getDrawable(R.drawable.classn));

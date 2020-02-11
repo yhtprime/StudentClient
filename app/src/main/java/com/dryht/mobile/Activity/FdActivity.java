@@ -465,6 +465,8 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
             if(!img.exists()){
                 //创建文件夹
                 img.createNewFile();
+                System.out.println(img.exists());
+                System.out.println("***********************************************");System.out.print("***********************************************");
             }
             fileOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath()+"/smartass/"+q+".jpeg");
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="148dp"
         android:ems="10"
+        android:text="1111"
         android:hint="请输入账号"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/textView"
@@ -23,6 +24,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:text="1111"
         android:ems="10"
         android:hint="请输入密码"
         android:inputType="textPassword"
@@ -44,15 +46,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.xuexiang.xui.widget.button.ButtonView
         android:id="@+id/login_btn"
+        style="@style/ButtonView.Green"
         android:layout_width="300dp"
-        android:layout_height="46dp"
-        android:layout_marginTop="50dp"
-        android:text="Button"
+        android:layout_margin="20dp"
+        android:text="Login In"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        />
+
+
 
     <LinearLayout
         android:id="@+id/line1"
