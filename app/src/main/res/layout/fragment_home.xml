@@ -11,7 +11,7 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#FFFFFF"
-        android:textSize="30dp"
+        android:textSize="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,7 +21,7 @@ android:layout_height="match_parent">
     <com.xuexiang.xui.widget.banner.recycler.BannerLayout
         android:id="@+id/home_banner"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         app:bl_autoPlaying="true"
         app:bl_centerScale="1.3"
         app:bl_interval="2000"
@@ -32,5 +32,226 @@ android:layout_height="match_parent">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_marquee" />
 
+    <TextView
+        android:id="@+id/home_banner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textFontWeight="400"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/tv_marquee"
+        app:layout_constraintTop_toBottomOf="@+id/home_banner"/>
+
+    <TextView
+        android:id="@+id/class_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:text="上课地点：A7-109"
+        android:textFontWeight="400"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_banner_title" />
+
+    <TextView
+        android:id="@+id/course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:text="软件工程"
+        android:textFontWeight="400"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_banner_title" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textFontWeight="400"
+        android:layout_marginTop="26dp"
+        android:text="距离上课还剩"
+        app:layout_constraintStart_toStartOf="@+id/class_place"
+        app:layout_constraintTop_toBottomOf="@+id/class_place" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:textSize="15dp"
+        android:textFontWeight="400"
+        android:text="12:00"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:textSize="15dp"
+        android:textFontWeight="400"
+        android:text="任课老师"
+        app:layout_constraintEnd_toStartOf="@+id/teacher_name"
+        app:layout_constraintTop_toTopOf="@+id/teacher_name" />
+
+    <TextView
+        android:id="@+id/teacher_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:textSize="15dp"
+        android:textFontWeight="400"
+        android:text="刘洋"
+        app:layout_constraintEnd_toEndOf="@+id/course_name"
+        app:layout_constraintTop_toBottomOf="@+id/course_name" />
+
+    <com.xuexiang.xui.widget.button.RippleView
+        android:id="@+id/check_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_banner_title"
+        app:rv_type="doubleRipple">
+
+        <TextView
+            android:id="@+id/check_btn_text"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="@color/md_blue_400"
+            android:gravity="center"
+            android:text="签到"
+            android:textColor="@color/xui_config_color_white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="0.235"
+            app:layout_constraintStart_toEndOf="@+id/time"
+            app:layout_constraintTop_toBottomOf="@+id/home_banner_title" />
+    </com.xuexiang.xui.widget.button.RippleView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/line"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/check_btn" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/md_yellow_100"
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="当前天气:"
+            android:textColor="@color/xui_config_color_gray_5"
+            android:textSize="45dp" />
+
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="15°C"
+            android:textSize="50dp"
+            tools:layout_editor_absoluteX="10dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="风力:南风三级"
+        android:background="@color/md_green_100"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/pm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PM2.5:100"
+        android:background="@color/md_red_100"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro" />
+
+    <TextView
+        android:id="@+id/temp_advice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="注意保暖和戴口罩哦"
+        android:textSize="30dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pm" />
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/line"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/temp_advice"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/line2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/line"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/line1">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="设置人脸登录"
+        app:layout_constraintBottom_toBottomOf="@+id/line1"
+        app:layout_constraintEnd_toStartOf="@+id/line2"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toEndOf="@+id/line1"
+        app:layout_constraintTop_toTopOf="@+id/line1" />
+
+    <ImageView
+        android:id="@+id/startrecogn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="92dp"
+        android:src="@drawable/startrecogn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/temp_advice"
+        app:layout_constraintVertical_bias="0.517"></ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

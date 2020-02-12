@@ -26,6 +26,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.dryht.mobile.R;
+import com.dryht.mobile.utils.XToastUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -121,6 +122,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     private Mat Matlin;
     private Mat gMatlin;
     private int absoluteFaceSize;
+    private SharedPreferences sharedPreferences;
     //人脸矩形框
     Rect facerect = null;
     //人脸垫子
@@ -135,6 +137,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.face_detect_surface_view);
+        sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
         mHandler = new Handler();
         //获取flag判断是录入还是识别
         limit =  getIntent().getIntExtra("flag",1);
@@ -364,13 +367,11 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                         OkHttpClient mOkHttpClient=new OkHttpClient();
                         MultipartBody.Builder builder=  new MultipartBody.Builder().setType(MultipartBody.FORM);
                             for (int i = 0;i<file.size();i++) {
-                                System.out.println("***********************************************");
-                                System.out.println(file.get(i));
-                                System.out.println(String.valueOf(file.get(i)));
-                                System.out.println("***********************************************");
                                 RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), new File(String.valueOf(file.get(i))));
                                 builder.addFormDataPart("img",filename.get(i),fileBody);
                             }
+                        builder.addFormDataPart("auth",sharedPreferences.getString("auth","0"));
+                        builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
                         Request mRequest=new Request.Builder()
                                 .url(com.dryht.mobile.Util.Utils.generalUrl+baseUrl)
                                 .post(builder.build())
@@ -391,8 +392,12 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                         file=null;
                                         filename=null;
                                         Intent intent=new Intent();
+                                        if(limit>1)
+                                            XToastUtils.toast("人脸录制成功");
+                                        else
+                                            XToastUtils.toast("人脸识别成功");
                                         //跳转到指定的Activity
-                                        intent.setClass(FdActivity.this, LoginActivity.class);
+                                        intent.setClass(FdActivity.this, MainActivity.class);
                                         //启动Activity
                                         startActivity(intent);
                                         onDestroy();
@@ -412,10 +417,13 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                     }
                                     else
                                     {
-                                        Toast.makeText(FdActivity.this,String.valueOf(result.get("result")),Toast.LENGTH_SHORT).show();
+                                        if(limit>1)
+                                            XToastUtils.toast("人脸录制失败");
+                                        else
+                                            XToastUtils.toast("人脸识别失败");
                                         Intent intent=new Intent();
                                         //跳转到指定的Activity
-                                        intent.setClass(FdActivity.this, LoginActivity.class);
+                                        intent.setClass(FdActivity.this, MainActivity.class);
                                         //启动Activity
                                         startActivity(intent);
 

@@ -9,7 +9,7 @@
     <EditText
         android:id="@+id/account"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="148dp"
         android:ems="10"
         android:text="1111"
@@ -22,7 +22,7 @@
     <EditText
         android:id="@+id/password"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="50dp"
         android:text="1111"
         android:ems="10"
@@ -50,62 +50,19 @@
         android:id="@+id/login_btn"
         style="@style/ButtonView.Green"
         android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_margin="20dp"
+        android:layout_marginTop="50dp"
         android:text="Login In"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
 
 
-    <LinearLayout
-        android:id="@+id/line1"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/line"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_btn"></LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/line2"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/line"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_btn">
 
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="人脸登录"
-        app:layout_constraintBottom_toBottomOf="@+id/line1"
-        app:layout_constraintEnd_toStartOf="@+id/line2"
-        app:layout_constraintHorizontal_bias="0.458"
-        app:layout_constraintStart_toEndOf="@+id/line1"
-        app:layout_constraintTop_toTopOf="@+id/line1" />
-
-    <ImageView
-        android:id="@+id/startrecogn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/startrecogn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-    </ImageView>
 
     <TextView
         android:id="@+id/forget"

@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private TextView forget;
     private ButtonView login;
-    private ImageView startrecogn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         login.setOnClickListener(new loginListener());
-        startrecogn.setOnClickListener(new startrecognListener());
+
 //        SharedPreferences sharedPreferences= getSharedPreferences("data", Context .MODE_PRIVATE);
 //        String userId=sharedPreferences.getString("authen","");
 //        System.out.println(userId+"*************************************");
@@ -88,7 +87,6 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         forget = findViewById(R.id.forget);
         login = findViewById(R.id.login_btn);
-        startrecogn = findViewById(R.id.startrecogn);
     }
 
 
@@ -116,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         result = new JSONObject(response.body().string());
                         //取数据
-                        if(result.get("authen")!=null)
+                        if(result.get("auth")!=null)
                         {
                             Toast.makeText(getBaseContext(),String.valueOf(result.get("result")),Toast.LENGTH_SHORT).show();
                             //步骤1：创建一个SharedPreferences对象
@@ -124,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                             //步骤2： 实例化SharedPreferences.Editor对象
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             //步骤3：将获取过来的值放入文件
-                            editor.putString("authen", result.get("authen").toString());
+                            editor.putString("auth", result.get("auth").toString());
                             //获取登录人得身份1为学生0为老师
                             editor.putString("identity", result.get("identity").toString());
                             //步骤4：提交
@@ -156,18 +154,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private class startrecognListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            //创建Intent对象
-            Intent intent=new Intent();
-            //将参数放入intent
-            intent.putExtra("flag", 1);
-            //跳转到指定的Activity
-            intent.setClass(LoginActivity.this, FdActivity.class);
-            //启动Activity
-            startActivity(intent);
 
-        }
-    }
 }
