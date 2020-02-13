@@ -159,7 +159,7 @@ android:layout_height="match_parent">
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="当前天气:"
+            android:text="当前温度:"
             android:textColor="@color/xui_config_color_gray_5"
             android:textSize="45dp" />
 

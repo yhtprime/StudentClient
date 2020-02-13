@@ -401,18 +401,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                         //启动Activity
                                         startActivity(intent);
                                         onDestroy();
-//                                        //成功结果主页
-//                                        mHandler.postDelayed(new Runnable() {
-//                                            @Override
-//                                            public void run() {
-//                                                Intent intent=new Intent();
-//                                                //跳转到指定的Activity
-//                                                intent.setClass(FdActivity.this, LoginActivity.class);
-//                                                //启动Activity
-//                                                startActivity(intent);
-//
-//                                            }
-//                                        }, 0);
 
                                     }
                                     else
