@@ -1,30 +1,62 @@
 package com.dryht.mobile.Fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
 import com.dryht.mobile.Activity.MainActivity;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
+import com.dryht.mobile.utils.XToastUtils;
 
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.devmeteor.tableview.Lesson;
+import com.dryht.mobile.Util.Lesson;
+import com.google.android.material.snackbar.Snackbar;
+import com.xuexiang.xui.utils.SnackbarUtils;
+import com.xuexiang.xui.widget.actionbar.TitleBar;
+import com.xuexiang.xui.widget.actionbar.TitleUtils;
+import com.xuexiang.xui.widget.searchview.MaterialSearchView;
+import com.xuexiang.xui.widget.toast.XToast;
+
 import cn.devmeteor.tableview.LessonView;
 import cn.devmeteor.tableview.TableView;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ClassFragment extends Fragment {
     private View view;
     private TableView tableView;
+    private SharedPreferences sharedPreferences;
+    private JSONArray jsonArray;
+    private Handler mHandler;
+    private List<Lesson> lessons;
+    private androidx.appcompat.widget.SearchView mSearchView;
     public ClassFragment() {
         // Required empty public constructor
     }
@@ -32,7 +64,7 @@ public class ClassFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        sharedPreferences= getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -40,50 +72,140 @@ public class ClassFragment extends Fragment {
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_class, container, false);
         tableView=view.findViewById(R.id.main_table);
-
-        tableView.setLessons(getLessons(),getBgMap(), new LessonView.LessonClickListener() {
-            @Override
-            public void onClick(Lesson lesson) {
-                Toast.makeText(getContext(),lesson.toString(),Toast.LENGTH_LONG).show();
-            }
-        });
+        mSearchView = view.findViewById(R.id.search_view);
+        mHandler = new Handler();
+        initSearchView();
+        getLessons();
         return view;
     }
+
+    private void initSearchView() {
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                XToastUtils.toast("点击了"+query);
+                //点击搜索
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.e("sss", newText);
+                //输得内容改变的方法监听
+                return false;
+            }
+        });
+    }
+
 
     //bgMap示例
     private Map<String,Integer> getBgMap(){
         Map<String,Integer> bgMap=new HashMap<>();
         Utils randcolor = new Utils();
-        bgMap.put("高等数学A2",  randcolor.createRandomColor());
-        bgMap.put("体育", Color.parseColor("#CC4CAF50"));
-        bgMap.put("计算机基础及应用2", Color.parseColor("#CC4FAFA7"));
-        bgMap.put("英国小说家与原著", Color.parseColor("#CCA8AF4C"));
-        bgMap.put("大学外语", Color.parseColor("#CCAF4C7A"));
-        bgMap.put("大学物理", Color.parseColor("#CCAF544C"));
-        bgMap.put("大学物理实验", Color.parseColor("#CC5FBD2C"));
-        bgMap.put("电路分析基础", Color.parseColor("#CCA6E252"));
-        bgMap.put("思想道德修养与法律基础", Color.parseColor("#CC5271E2"));
-        bgMap.put("电路分析实验", Color.parseColor("#CCE25263"));
+        for (int i = 0; i < lessons.size(); i++) {
+            bgMap.put(lessons.get(i).getName(),randcolor.createRandomColor());
+        }
         return bgMap;
     }
 
     //模拟生成课程数据，自定义课程bean可直接替换
-    private List<Lesson> getLessons(){
-        List<Lesson> lessons=new ArrayList<>();
-        lessons.add(new Lesson("2018-2019-2", "第1周", "高等数学A2","mon",1,2, "崇师"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "体育","mon",3,4, "足球场"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "计算机基础及应用2","mon",5,6, "行知"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "英国小说家与原著","mon",9,10, "崇师"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "大学外语","tue",1,2, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "大学物理","tue",3,4, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "大学物理实验","tue",5,10, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "高等数学A2","wed",1,2, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "电路分析基础","wed",3,4, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "思想道德修养与法律基础","thu",1,2, "崇师"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "大学物理","thu",5,6, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "电路分析基础","fri",1,2, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "大学外语","fri",3,4, "理二"));
-        lessons.add(new Lesson("2018-2019-2", "第1周", "电路分析实验","fri",5,6, "理二"));
-        return lessons;
+    private void getLessons(){
+        OkHttpClient mOkHttpClient=new OkHttpClient();
+        FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).build();
+        Request mRequest=new Request.Builder()
+                .url(Utils.generalUrl+"getPClass/")
+                .post(mFormBody)
+                .build();
+
+        mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+            @Override
+            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                //String转JSONObject
+                JSONObject result = null;
+                try {
+                    result = new JSONObject(response.body().string());
+                    //取数据
+                    if(result.get("status").equals("1"))
+                    {
+                        System.out.println("**************************************");
+                        jsonArray = new JSONArray(result.get("data").toString());
+                        lessons=new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            try {
+                                lessons.add(new Lesson(jsonArray.getJSONObject(i).get("classid").toString(),null,jsonArray.getJSONObject(i).get("name").toString(),jsonArray.getJSONObject(i).get("weekday").toString(),Integer.parseInt(jsonArray.getJSONObject(i).get("time").toString()),Integer.parseInt(jsonArray.getJSONObject(i).get("count").toString()),jsonArray.getJSONObject(i).get("place").toString()));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        System.out.println(jsonArray);
+                        System.out.println("**************************************");
+                        //挂起
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                tableView.setLessons(lessons,getBgMap(), new LessonView.LessonClickListener() {
+                                    @Override
+                                    public void onClick(cn.devmeteor.tableview.Lesson lesson) {
+                                        Toast.makeText(getContext(),lesson.toString(),Toast.LENGTH_LONG).show();
+                                    }
+
+                                });
+                            }
+                        }, 0);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                XToastUtils.toast("获取课程表失败");
+            }
+        });
     }
+////    class getLesson implements Runnable{
+////        @Override
+////        public void run() {
+////            OkHttpClient mOkHttpClient=new OkHttpClient();
+////            FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).build();
+////            Request mRequest=new Request.Builder()
+////                    .url(Utils.generalUrl+"getPClass/")
+////                    .post(mFormBody)
+////                    .build();
+////
+////            mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+////                @Override
+////                public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+////                    //String转JSONObject
+////                    JSONObject result = null;
+////                    try {
+////                        result = new JSONObject(response.body().string());
+////                        //取数据
+////                        if(result.get("status").equals("1"))
+////                        {
+////                            System.out.println("**************************************");
+////                            jsonArray = new JSONArray(result.get("data").toString());
+////                            lessons=new ArrayList<>();
+////                            for (int i = 0; i < jsonArray.length(); i++) {
+////                                try {
+////                                    lessons.add(new Lesson(jsonArray.getJSONObject(i).get("classid").toString(),null,jsonArray.getJSONObject(i).get("name").toString(),jsonArray.getJSONObject(i).get("weekday").toString(),Integer.parseInt(jsonArray.getJSONObject(i).get("start").toString()),Integer.parseInt(jsonArray.getJSONObject(i).get("end").toString()),jsonArray.getJSONObject(i).get("place").toString()));
+////                                } catch (JSONException e) {
+////                                    e.printStackTrace();
+////                                }
+////                            }
+////                            System.out.println(jsonArray);
+////                            System.out.println("**************************************");
+////                        }
+////                    } catch (JSONException e) {
+////                        e.printStackTrace();
+////                    }
+////                }
+////                @Override
+////                public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+////                    XToastUtils.toast("获取课程表失败");
+////                }
+////            });
+////        }
+//    }
 }
