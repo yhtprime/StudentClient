@@ -17,8 +17,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
-
     </androidx.appcompat.widget.SearchView>
+
+
+
 
     <cn.devmeteor.tableview.TableView
         android:id="@+id/main_table"
@@ -33,6 +35,16 @@
         app:layout_constraintVertical_bias="0.0"
         app:tv_count_per_day="10"
         app:tv_indicator_bg_color="#4DFFFFFF"
-        app:tv_week_bg_color="#4DFFFFFF" />
+        app:tv_week_bg_color="#4DFFFFFF" >
+    </cn.devmeteor.tableview.TableView>
+
+    <ListView
+        android:id="@+id/search_classList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/main_table" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

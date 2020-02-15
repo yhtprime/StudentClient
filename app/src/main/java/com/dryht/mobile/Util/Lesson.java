@@ -9,6 +9,7 @@ public class Lesson extends cn.devmeteor.tableview.Lesson {
     private int start;
     private int end;
     private String place;
+    private String teacher;
 
     public String getTerm() {
         return term;
@@ -37,9 +38,12 @@ public class Lesson extends cn.devmeteor.tableview.Lesson {
     public String getPlace() {
         return place;
     }
+    public String getTeacher() {
+        return teacher;
+    }
 
 
-    public Lesson(String term, String week, String name, String weekday, int start, int end, String place) {
+    public Lesson(String term, String week, String name, String weekday, int start, int end, String place,String teacher) {
         super(term,week,name,weekday,start,end,place);
         this.term = term;
         this.week = week;
@@ -48,10 +52,11 @@ public class Lesson extends cn.devmeteor.tableview.Lesson {
         this.start = start;
         this.end = end;
         this.place = place;
+        this.teacher = teacher;
     }
 
     @Override
     public String toString() {
-        return name+place;
+        return name+place+teacher;
     }
 }

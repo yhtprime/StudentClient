@@ -53,6 +53,20 @@ public class HomePageAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return fragments.size();
     }
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        // 将实例化的fragment进行显示即可。
+        Fragment fragment = (Fragment) super.instantiateItem(container, position);
+        fragmentManager.beginTransaction().show(fragment).commit();
+        return fragment;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+//            super.destroyItem(container, position, object);// 注释父类方法
+        Fragment fragment = fragments.get(position);// 获取要销毁的fragment
+        fragmentManager.beginTransaction().hide(fragment).commit();// 将其隐藏即可，并不需要真正销毁，这样fragment状态就得到了保存
+    }
 
 }
 
