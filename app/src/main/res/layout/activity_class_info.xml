@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/classinfotitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="65dp"
+        app:tb_dividerColor="@color/xui_config_color_red"
+        app:tb_leftImageResource="@drawable/icon_back_white"
+        app:tb_leftText="回退"
+        app:tb_sideTextPadding="20dp"
+        app:tb_subTitleText="这是副标题"
+        app:tb_titleText="这是一个Title" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/classinforefreshLayout"
+        style="@style/PullDownStyle"
+        android:layout_height="wrap_content">
+
+        <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">
+
+            <com.xuexiang.xui.widget.grouplist.XUIGroupListView
+                android:id="@+id/classGroupListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.core.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

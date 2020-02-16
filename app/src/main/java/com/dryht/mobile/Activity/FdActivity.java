@@ -327,7 +327,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         Core.flip(mGray, mGray, 1);
 
 
-        //MatOfRect faces = new MatOfRect();
+        Rect[] faceArray = new Rect[0];
         if (mRecodeFreeTime + 10 <= mMilliCurrentTime) {
             mRecodeFreeTime = mMilliCurrentTime;
             if (mRecodeTime == 0 || mRecodeTime < mCurrentTime) {//识别到人之后，1秒做一次检测
@@ -339,7 +339,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                     if (mFrontalFaceClassifier != null) {
                         mFrontalFaceClassifier.detectMultiScale(gMatlin, faces, 1.1, 5, 2, new Size(absoluteFaceSize, absoluteFaceSize), new Size());
                     }
-                    Rect[] faceArray = faces.toArray();
+                    faceArray = faces.toArray();
 
                     for (int i = 0; i < faceArray.length; i++) {
                         Imgproc.rectangle(Matlin, faceArray[i].tl(), faceArray[i].br(), new Scalar(255, 255, 255), 2);
@@ -350,7 +350,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                     Core.rotate(Matlin, mRgba, Core.ROTATE_90_COUNTERCLOCKWISE);
 
                 }
-                if(null != facerect)
+                if(1<= faceArray.length)
                 {
                     faceimage = new Mat(Matlin,facerect);
                     //把mat转换成bitmap

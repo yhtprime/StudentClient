@@ -1,6 +1,7 @@
 package com.dryht.mobile.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,14 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
+import com.dryht.mobile.Activity.ClassInfoActivity;
+import com.dryht.mobile.Activity.LoginActivity;
 import com.dryht.mobile.Activity.MainActivity;
 import com.dryht.mobile.Adapter.ListViewSearchClassAdapter;
 import com.dryht.mobile.R;
@@ -112,6 +117,8 @@ public class ClassFragment extends Fragment {
         return view;
     }
 
+
+
     private void initSearchView() {
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -165,6 +172,9 @@ public class ClassFragment extends Fragment {
                                                                         int position, long id) {
                                                     Lesson lesson= searchlessons.get(position);
                                                     XToastUtils.toast(lesson.getName());
+                                                    Intent intent = new Intent(getContext(), ClassInfoActivity.class);
+                                                    intent.putExtra("classid",lesson.getTerm());
+                                                    startActivity(intent);
                                                 }
                                             });
                                         }
@@ -192,7 +202,6 @@ public class ClassFragment extends Fragment {
                         try {
                             if(jsonArray.getJSONObject(i).get("name").toString().indexOf(newText)>=0&&!newText.equals(""))
                                 searchlessons.add(new Lesson(jsonArray.getJSONObject(i).get("classid").toString(),null,jsonArray.getJSONObject(i).get("name").toString(),jsonArray.getJSONObject(i).get("weekday").toString(),Integer.parseInt(jsonArray.getJSONObject(i).get("time").toString()),Integer.parseInt(jsonArray.getJSONObject(i).get("count").toString()),jsonArray.getJSONObject(i).get("place").toString(),jsonArray.getJSONObject(i).get("tname").toString()));
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -209,6 +218,9 @@ public class ClassFragment extends Fragment {
                                                         int position, long id) {
                                     Lesson lesson= searchlessons.get(position);
                                     XToastUtils.toast(lesson.getName());
+                                    Intent intent = new Intent(getContext(), ClassInfoActivity.class);
+                                    intent.putExtra("classid",lesson.getTerm());
+                                    startActivity(intent);
                                 }
                             });
                         }
@@ -270,6 +282,9 @@ public class ClassFragment extends Fragment {
                                     @Override
                                     public void onClick(cn.devmeteor.tableview.Lesson lesson) {
                                         Toast.makeText(getContext(),lesson.toString(),Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getContext(), ClassInfoActivity.class);
+                                        intent.putExtra("classid",lesson.getTerm());
+                                        startActivity(intent);
                                     }
                                 });
                             }

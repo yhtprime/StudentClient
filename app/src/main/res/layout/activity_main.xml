@@ -9,11 +9,13 @@
     <com.dryht.mobile.Util.NoScrollViewPager
         android:id="@+id/vp"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/Nav_btn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="0dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <FrameLayout
         android:id="@+id/Nav_btn"
@@ -21,6 +23,6 @@
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-    </FrameLayout>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

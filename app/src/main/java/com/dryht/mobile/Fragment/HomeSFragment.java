@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.dryht.mobile.Activity.ClassInfoActivity;
 import com.dryht.mobile.Activity.FdActivity;
 
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
@@ -32,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
+import cn.devmeteor.tableview.LessonView;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -54,6 +57,7 @@ public class HomeSFragment extends Fragment {
     private RippleView checkbtn;
     private TextView checkbtntitle;
     private ImageView startrecogn;
+    private Handler mHandler;
     private JSONArray Top5News = null;
     private RecyclerViewBannerAdapter mAdapterHorizontal;
     private SharedPreferences sharedPreferences;
@@ -65,6 +69,7 @@ public class HomeSFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHandler = new Handler();
     }
 
     private void initComponent() {
@@ -271,20 +276,33 @@ public class HomeSFragment extends Fragment {
                         System.out.println("***************************");
                         System.out.println(result);
                         System.out.println("***************************");
-                        temp.setText(result.get("temp").toString());
-                        intro.setText("详细天气情况："+result.get("intro").toString());
-                        pm.setText("pm2.5指数："+result.get("pm").toString());
-                        String pmadvice = null;
-                        String tempadvice = null;
-                        if(Integer.parseInt(result.get("pm").toString())>50)
-                            pmadvice = "要记得戴口罩哦 ";
-                        else
-                            pmadvice = "今天天气质量不错哟 ";
-                        if (Integer.parseInt(result.get("temp").toString())<10)
-                            tempadvice = "要注意保暖";
-                        else
-                            tempadvice = "温度适宜";
-                        temp_advice.setText(tempadvice+pmadvice);
+                        //挂起
+                        final JSONObject finalResult = result;
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    temp.setText(finalResult.get("temp").toString());
+                                    intro.setText("详细天气情况："+ finalResult.get("intro").toString());
+                                    pm.setText("pm2.5指数："+ finalResult.get("pm").toString());
+                                    String pmadvice = null;
+                                    String tempadvice = null;
+                                    if(Integer.parseInt(finalResult.get("pm").toString())>50)
+                                        pmadvice = "要记得戴口罩哦 ";
+                                    else
+                                        pmadvice = "今天天气质量不错哟 ";
+                                    if (Integer.parseInt(finalResult.get("temp").toString())<10)
+                                        tempadvice = "要注意保暖";
+                                    else
+                                        tempadvice = "温度适宜";
+                                    temp_advice.setText(tempadvice+pmadvice);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, 0);
+
                     }
                     else
                     {
