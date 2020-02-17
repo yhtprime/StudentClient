@@ -3,8 +3,6 @@ package com.dryht.mobile.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,16 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.dryht.mobile.Activity.ClassInfoActivity;
 import com.dryht.mobile.Activity.FdActivity;
 
+import com.dryht.mobile.Activity.TabNewActivity;
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 
+import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
@@ -34,14 +35,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 
-import cn.devmeteor.tableview.LessonView;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HomeSFragment extends Fragment {
+public class HomeSFragment extends Fragment implements View.OnClickListener {
     private View view;
     private TextView class_place;
     private TextView time;
@@ -74,19 +74,17 @@ public class HomeSFragment extends Fragment {
 
     private void initComponent() {
         class_place = view.findViewById(R.id.class_place);
-        time = view.findViewById(R.id.time);
+        time = view.findViewById(R.id.comment_time);
         course_name = view.findViewById(R.id.course_name);
         teacher_name = view.findViewById(R.id.teacher_name);
         temp = view.findViewById(R.id.temp);
-        intro = view.findViewById(R.id.intro);
+        intro = view.findViewById(R.id.comment_intro);
         pm = view.findViewById(R.id.pm);
         temp_advice = view.findViewById(R.id.temp_advice);
         mTvMarquee = view.findViewById(R.id.tv_marquee);
         bannerLayout = view.findViewById(R.id.home_banner);
         banner_title = view.findViewById(R.id.home_banner_title);
         checkbtn = view.findViewById(R.id.check_btn);
-        checkbtntitle = view.findViewById(R.id.check_btn_text);
-        checkbtntitle.setOnClickListener(new startcheckListener());
         startrecogn = view.findViewById(R.id.startrecogn);
         startrecogn.setOnClickListener(new startrecognListener());
     }
@@ -141,13 +139,21 @@ public class HomeSFragment extends Fragment {
         mTvMarquee.addDisplayString("《《《欢迎使用校园小助手，更多校园信息请点击这里》》》");
         mTvMarquee.setSpeed(7);
         mTvMarquee.startRoll();
-        //签到按钮
-        checkbtn.setOnClickListener(new View.OnClickListener() {
+        mTvMarquee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), TabNewActivity.class);
+                startActivity(intent);
             }
         });
+
+        //签到按钮
+        checkbtn.setOnClickListener(new startcheckListener());
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 
@@ -224,9 +230,19 @@ public class HomeSFragment extends Fragment {
                                 Top5News.getJSONObject(3).get("pic").toString(),
                                 Top5News.getJSONObject(4).get("pic").toString(),
                         };
-                        bannerLayout.setAdapter(mAdapterHorizontal = new RecyclerViewBannerAdapter(urls));
-                        bannerLayout.setAutoPlaying(true);
-                        banner_title.setText(Top5News.getJSONObject(0).get("name").toString());
+                        final String[] finalUrls = urls;
+                        mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    bannerLayout.setAdapter(mAdapterHorizontal = new RecyclerViewBannerAdapter(finalUrls));
+                                    bannerLayout.setAutoPlaying(true);
+                                    try {
+                                        banner_title.setText(Top5News.getJSONObject(0).get("name").toString());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, 0);
                     }
                     else
                     {

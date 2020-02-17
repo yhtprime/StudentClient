@@ -8,18 +8,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-
+    <ScrollView
+        android:id="@+id/seenews"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
     <com.xuexiang.xui.widget.textview.MarqueeTextView
         android:id="@+id/tv_marquee"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#FFFFFF"
         android:textSize="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:mtv_isAutoDisplay="true"
         app:mtv_isAutoFit="true" />
+    </ScrollView>
 
     <com.xuexiang.xui.widget.banner.recycler.BannerLayout
         android:id="@+id/home_banner"
@@ -33,7 +37,7 @@
         app:bl_showIndicator="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_marquee" />
+        app:layout_constraintTop_toBottomOf="@+id/seenews" />
 
     <TextView
         android:id="@+id/home_banner_title"
@@ -43,7 +47,7 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/tv_marquee"
+        app:layout_constraintStart_toStartOf="@+id/seenews"
         app:layout_constraintTop_toBottomOf="@+id/home_banner" />
 
     <TextView
@@ -86,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/class_place" />
 
     <TextView
-        android:id="@+id/time"
+        android:id="@+id/comment_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="12:00"
@@ -142,7 +146,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/textView4"
             app:layout_constraintHorizontal_bias="0.235"
-            app:layout_constraintStart_toEndOf="@+id/time"
+            app:layout_constraintStart_toEndOf="@+id/comment_time"
             app:layout_constraintTop_toBottomOf="@+id/home_banner_title" />
     </com.xuexiang.xui.widget.button.RippleView>
 
@@ -186,7 +190,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/intro"
+        android:id="@+id/comment_intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/md_green_100"
@@ -205,7 +209,7 @@
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/intro" />
+        app:layout_constraintTop_toBottomOf="@+id/comment_intro" />
 
     <TextView
         android:id="@+id/temp_advice"
@@ -220,7 +224,7 @@
 
     <LinearLayout
         android:id="@+id/line1"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="20dp"
@@ -232,7 +236,7 @@
 
     <LinearLayout
         android:id="@+id/line2"
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:background="@drawable/line"
         android:gravity="center"
@@ -247,6 +251,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="设置人脸登录"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/line1"
         app:layout_constraintEnd_toStartOf="@+id/line2"
         app:layout_constraintHorizontal_bias="0.458"
@@ -255,8 +260,8 @@
 
     <ImageView
         android:id="@+id/startrecogn"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/startrecogn"
         app:layout_constraintEnd_toEndOf="parent"

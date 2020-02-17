@@ -10,13 +10,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
+import com.dryht.mobile.Fragment.NavBarFragment;
+import com.dryht.mobile.Fragment.SendCommentFragment;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Lesson;
 import com.dryht.mobile.Util.Utils;
@@ -51,6 +60,9 @@ public class ClassInfoActivity extends AppCompatActivity {
     private TitleBar mTitleBar;
     private RefreshLayout refreshLayout;
     private SharedPreferences sharedPreferences;
+    private FragmentManager supportFragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private RecyclerView recyclerView;
     private Handler mHandler;
     private String classid;
     public ClassInfoActivity() {
@@ -63,13 +75,62 @@ public class ClassInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_info);
         classid = getIntent().getStringExtra("classid");
         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("classid",classid).commit();
         mGroupListView = findViewById(R.id.classGroupListView);
         refreshLayout = (RefreshLayout)findViewById(R.id.classinforefreshLayout);
         mTitleBar = findViewById(R.id.classinfotitle);
+        recyclerView = findViewById(R.id.classcomments);
         refreshLayout.setOnRefreshListener(new refreshListener());
+        refreshLayout.autoRefresh();
         mHandler = new Handler();
+        //获取管理者
+        supportFragmentManager = getSupportFragmentManager();
+        //开启事务
+        fragmentTransaction =  supportFragmentManager.beginTransaction();
+        //添加底部导航上去
+        fragmentTransaction.add(R.id.sendclasscomment, new SendCommentFragment()).commit();
         initTitleBar();
         initGroupListView();
+    }
+    //获取课程评论
+    private void getclassComment() {
+        OkHttpClient mOkHttpClient=new OkHttpClient();
+        FormBody mFormBody=new FormBody.Builder().add("classid",classid).build();
+        Request mRequest=new Request.Builder()
+                .url(Utils.generalUrl+"getClassComment/")
+                .post(mFormBody)
+                .build();
+
+        mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+            @Override
+            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                //String转JSONObject
+                JSONObject result = null;
+                try {
+                    result = new JSONObject(response.body().string());
+                    //取数据
+                    if(result.get("status").equals("1"))
+                    {
+                        //挂起
+                        final JSONArray finalResult = new JSONArray(result.get("data").toString());
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                RecyclerViewCommentAdapter r = new RecyclerViewCommentAdapter(ClassInfoActivity.this,finalResult,R.layout.adapter_recycle_view_comment_item);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(ClassInfoActivity.this));
+                                recyclerView.setAdapter(r);
+                            }
+                        }, 0);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                XToastUtils.toast("获取课程信息失败");
+            }
+        });
     }
 
 
@@ -77,7 +138,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         mTitleBar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                XToastUtils.toast("点击返回");
+                finish();
             }
         }).setCenterClickListener(new View.OnClickListener() {
             @Override
@@ -183,14 +244,6 @@ public class ClassInfoActivity extends AppCompatActivity {
                                 }
                             }
                         }, 0);
-
-
-//                        XUIGroupListView.newSection(getContext())
-//                                .setTitle("Section 2: 自定义右侧 View")
-//                                .addItemView(itemWithCustom, onClickListener)
-//                                .addTo(mGroupListView);
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -201,12 +254,6 @@ public class ClassInfoActivity extends AppCompatActivity {
                 XToastUtils.toast("获取课程信息失败");
             }
         });
-
-
-
-
-
-
     }
 
     private class refreshListener implements OnRefreshListener {
@@ -216,8 +263,7 @@ public class ClassInfoActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Looper.prepare();
-                    XToastUtils.toast("lalalallalallaa");
-
+                    getclassComment();
                     //结束加载
                     refreshLayout.finishRefresh();
                     //加载失败的话3秒后结束加载
