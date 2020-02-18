@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
          mVp = findViewById(R.id.vp);
 
-        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
         if(sharedPreferences.getString("identity",null)==null||sharedPreferences.getString("identity","1").equals("1"))
         {
             fragmentlist .add(new HomeSFragment());

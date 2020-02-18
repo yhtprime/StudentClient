@@ -1,0 +1,53 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/classinfotitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="45dp"
+        app:tb_dividerColor="@color/xui_config_color_blue"
+        app:tb_leftImageResource="@drawable/icon_back_white"
+        app:tb_leftText="返回"
+        app:tb_sideTextPadding="20dp"
+        app:tb_subTitleText=""
+        app:tb_titleText="新闻详情"
+        app:layout_collapseMode="pin"/>
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+        <ImageView
+            android:id="@+id/newimg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/homec"
+            app:layout_collapseMode="parallax" />
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+</com.google.android.material.appbar.AppBarLayout>
+
+    <WebView
+        android:id="@+id/newintro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textNoSuggestions">
+    </WebView>
+</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

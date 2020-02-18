@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.TabNewActivity"></activity>
+        <activity android:name=".Activity.NewInfoActivity"></activity>
+        <activity android:name=".Activity.TabNewActivity" />
         <activity android:name=".Activity.MainActivity">
 
             <!-- <intent-filter> -->

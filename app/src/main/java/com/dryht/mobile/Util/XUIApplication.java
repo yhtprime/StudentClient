@@ -3,6 +3,7 @@ package com.dryht.mobile.Util;
 import android.app.Application;
 import android.view.LayoutInflater;
 
+import com.xuexiang.xpage.PageConfig;
 import com.xuexiang.xui.XUI;
 
 import java.io.File;
@@ -20,7 +21,5 @@ public class XUIApplication extends Application {
         XUI.debug(true);  //开启UI框架调试日志
         // TODO Auto-generated method stub
         super.onCreate();
-
     }
-
     }
