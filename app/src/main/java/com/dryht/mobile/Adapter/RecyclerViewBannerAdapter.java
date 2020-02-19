@@ -18,6 +18,8 @@
 package com.dryht.mobile.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
@@ -27,6 +29,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 
 import com.dryht.mobile.Activity.MainActivity;
+import com.dryht.mobile.Activity.NewInfoActivity;
 import com.dryht.mobile.R;
 import com.dryht.mobile.utils.XToastUtils;
 import com.xuexiang.xui.adapter.recyclerview.BaseRecyclerAdapter;
@@ -37,20 +40,20 @@ import com.xuexiang.xui.widget.imageview.strategy.DiskCacheStrategyEnum;
 import com.xuexiang.xui.widget.toast.XToast;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author xuexiang
- * @since 2019-05-30 00:50
- */
+
 public class RecyclerViewBannerAdapter extends BaseRecyclerAdapter<String> {
 
     /**
      * 默认加载图片
      */
     private ColorDrawable mColorDrawable;
-
+    private SharedPreferences sharedPreferences;
     /**
      * 是否允许进行缓存
      */
@@ -105,9 +108,13 @@ public class RecyclerViewBannerAdapter extends BaseRecyclerAdapter<String> {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                XToastUtils.toast("成功点击了" + (position + 1) + "个");
-                if (mOnBannerItemClickListener != null) {
-                    XToastUtils.toast("成功点击了" + (position + 1) + "个");
+                sharedPreferences= v.getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
+                Intent intent = new Intent(v.getContext(), NewInfoActivity.class);
+                try {
+                    intent.putExtra("newid",new JSONArray(sharedPreferences.getString("Top5News","")).getJSONObject(position).get("newid").toString());
+                    v.getContext().startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         });

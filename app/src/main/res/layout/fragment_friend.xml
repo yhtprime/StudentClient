@@ -1,11 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/moments_appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="friend"></TextView>
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/moments_collapse_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
+                app:contentScrim="@color/md_purple_100"
+                app:expandedTitleMarginEnd="48dp"
+                app:expandedTitleMarginStart="48dp"
+                app:expandedTitleTextAppearance="@style/transparentText"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                android:fitsSystemWindows="true">
+                <LinearLayout
+                    android:id="@+id/moments_info_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_collapseMode="pin"
+                    app:layout_collapseParallaxMultiplier="0.7">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="240dp"
+                        android:background="@color/xui_config_color_gray_8">
+                        <ImageView
+                            android:id="@+id/moments_background"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"/>
+                        <LinearLayout
+                            android:id="@+id/moments_post"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:clickable="true"
+                            android:focusable="true">
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_marginTop="30dp"
+                                android:layout_marginLeft="30dp"
+                                android:src="@drawable/ic_launcher_background"/>
+                        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginRight="20dp"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/moments_text_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:textColor="@color/white"
+                                android:layout_marginBottom="8dp"/>
+                            <ImageView
+                                android:id="@+id/moments_icon"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
+                                android:background="@color/white"
+                                android:padding="2dp"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:clickable="true"
+                    app:layout_collapseMode="pin"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:titleTextAppearance="@string/app_name"/>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/moments_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="#ffffff"
+                android:fillViewport="false"
+                app:layout_scrollFlags="scroll"
+                app:tabIndicatorColor="@color/md_purple_100"
+                app:tabIndicatorHeight="2dp"
+                app:tabSelectedTextColor="@color/md_purple_100"
+                app:tabTextColor="#ced0d3">
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="圈内动态"/>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="公开动态"/>
+            </com.google.android.material.tabs.TabLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/moments_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

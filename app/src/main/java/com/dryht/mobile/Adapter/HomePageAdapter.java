@@ -21,11 +21,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.dryht.mobile.Fragment.NavBarFragment;
 import com.dryht.mobile.R;
 
-/**
- * @Author: wuchaowen
- * @Description:
- * @Time:
- **/
+
 public class HomePageAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;
     private LayoutInflater mInflater;

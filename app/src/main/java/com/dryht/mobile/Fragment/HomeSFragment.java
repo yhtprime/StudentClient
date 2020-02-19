@@ -3,6 +3,7 @@ package com.dryht.mobile.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -55,7 +56,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     private BannerLayout bannerLayout;
     private TextView banner_title;
     private RippleView checkbtn;
-    private TextView checkbtntitle;
+    private TextView check_btn_text;
     private ImageView startrecogn;
     private Handler mHandler;
     private JSONArray Top5News = null;
@@ -85,6 +86,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
         bannerLayout = view.findViewById(R.id.home_banner);
         banner_title = view.findViewById(R.id.home_banner_title);
         checkbtn = view.findViewById(R.id.check_btn);
+        check_btn_text = view.findViewById(R.id.check_btn_text);
         startrecogn = view.findViewById(R.id.startrecogn);
         startrecogn.setOnClickListener(new startrecognListener());
     }
@@ -123,9 +125,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
             }
         }
         getWeather();
-
-
-
+        getInstantClass();
         bannerLayout.setOnIndicatorIndexChangedListener(new BannerLayout.OnIndicatorIndexChangedListener() {
             @Override
             public void onIndexChanged(int position) {
@@ -147,9 +147,158 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        //签到按钮
-        checkbtn.setOnClickListener(new startcheckListener());
 
+
+
+    }
+//获取即将上课的课程信息
+    private void getInstantClass() {
+        OkHttpClient mOkHttpClient=new OkHttpClient();
+
+        FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).build();
+
+        Request mRequest=new Request.Builder()
+                .url(Utils.generalUrl+"getInstantClass/")
+                .post(mFormBody)
+                .build();
+        mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+            @Override
+            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                Looper.prepare();
+                //String转JSONObject
+                JSONObject result = null;
+                try {
+                    result = new JSONObject(response.body().string());
+                    //取数据
+                    if(result.get("status").equals("1"))
+                    {
+                        result = (JSONObject) result.get("data");
+                        final JSONObject finalResult = result;
+                        mHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    class_place.setText(finalResult.getString("place"));
+                                    course_name.setText(finalResult.getString("name"));
+                                    teacher_name.setText(finalResult.getString("tname"));
+                                    time.setText(finalResult.getString("time"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, 0);
+                                    OkHttpClient mOkHttpClient=new OkHttpClient();
+                                    FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("classid",finalResult.getString("classid")).build();
+                                    Request mRequest=new Request.Builder()
+                                            .url(Utils.generalUrl+"getTeacherCheck/")
+                                            .post(mFormBody)
+                                            .build();
+                                    mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+                                        @Override
+                                        public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                                            Looper.prepare();
+                                            //String转JSONObject
+                                            JSONObject result = null;
+                                            try {
+                                                result = new JSONObject(response.body().string());
+                                                //没有开启考勤
+                                                if(result.get("status").equals("0")) {
+                                                    final JSONObject finalResult = result;
+                                                    mHandler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            checkbtn.setEnabled(false);
+                                                            try {
+                                                                check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
+                                                                check_btn_text.setText(finalResult.get("result").toString());
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    }, 0);
+                                                }
+                                                //需要考勤
+                                                else if(result.get("status").equals("1")) {
+                                                    final JSONObject finalResult = result;
+                                                    mHandler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            checkbtn.setEnabled(false);
+                                                            try {
+                                                                check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_green_400));
+                                                                check_btn_text.setText(finalResult.get("result").toString());
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    }, 0);
+                                                }
+                                                //已考勤
+                                                else if(result.get("status").equals("2")) {
+                                                    final JSONObject finalResult1 = result;
+                                                    mHandler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            checkbtn.setEnabled(true);
+                                                            try {
+                                                                check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_red_300));
+                                                                check_btn_text.setText(finalResult1.get("result").toString());
+                                                                //签到按钮
+                                                                checkbtn.setOnClickListener(new View.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(View v) {
+                                                                        //创建Intent对象
+                                                                        Intent intent=new Intent();
+                                                                        //将参数放入intent
+                                                                        intent.putExtra("flag", 1);
+                                                                        try {
+                                                                            intent.putExtra("classid",finalResult.getString("classid"));
+                                                                        } catch (JSONException e) {
+                                                                            e.printStackTrace();
+                                                                        }
+                                                                        //跳转到指定的Activity
+                                                                        intent.setClass(getContext(), FdActivity.class);
+                                                                        //启动Activity
+                                                                        startActivity(intent);
+                                                                    }
+                                                                });
+                                                            } catch (JSONException e) {
+                                                                e.printStackTrace();
+                                                            }
+                                                        }
+                                                    }, 0);
+                                                }
+
+
+
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+
+                                        }
+                                        @Override
+                                        public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                                            XToastUtils.toast("获取新闻列表失败");
+                                        }
+                                    });
+                    };
+
+                    } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+//                Looper.prepare();
+                XToastUtils.toast("获取新闻列表失败");
+//                Looper.loop();
+            }
+        });
     }
 
     @Override
@@ -165,22 +314,6 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
             Intent intent=new Intent();
             //将参数放入intent
             intent.putExtra("flag", 3);
-            //跳转到指定的Activity
-            intent.setClass(getContext(), FdActivity.class);
-            //启动Activity
-            startActivity(intent);
-
-        }
-    }
-
-    //考勤
-    private class startcheckListener implements View.OnClickListener{
-        @Override
-        public void onClick(View v) {
-            //创建Intent对象
-            Intent intent=new Intent();
-            //将参数放入intent
-            intent.putExtra("flag", 1);
             //跳转到指定的Activity
             intent.setClass(getContext(), FdActivity.class);
             //启动Activity

@@ -85,6 +85,8 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     private ArrayList<String> file = new ArrayList<>();
     //显示是录制还是识别
     private int limit = 0;
+    //考勤的课程
+    private String classid;
     private Rect[] mFrontalFacesArray;
     private Rect[] mProfileFacesArray;
     //保留正脸数据用于分析性别和年龄
@@ -141,6 +143,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         mHandler = new Handler();
         //获取flag判断是录入还是识别
         limit =  getIntent().getIntExtra("flag",1);
+        classid =  getIntent().getStringExtra("classid");
         if(limit>1)
             baseUrl = "recordfacedata/";
         else
@@ -314,7 +317,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                    /* Bitmap bitmap = Bitmap.createBitmap(mRgba.width(), mRgba.height(), Bitmap.Config.RGB_565);
                     Utils.matToBitmap(mRgba, bitmap);
                     mFaceBitmap = bitmap;*/
-/////////////////////////
         mMilliCurrentTime = System.currentTimeMillis() / 100;//获取当前时间毫秒级别
         mCurrentTime = mMilliCurrentTime / 10;//获取当前时间，秒级别
         int rotation = openCvCameraView.getDisplay().getRotation();
@@ -372,6 +374,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                             }
                         builder.addFormDataPart("auth",sharedPreferences.getString("auth","0"));
                         builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
+                        builder.addFormDataPart("classid",classid);
                         Request mRequest=new Request.Builder()
                                 .url(com.dryht.mobile.Util.Utils.generalUrl+baseUrl)
                                 .post(builder.build())

@@ -24,6 +24,7 @@ import com.dryht.mobile.Util.OnRecyclerItemClickListener;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.widget.actionbar.TitleBar;
 
 import net.nightwhistler.htmlspanner.HtmlSpanner;
 
@@ -46,21 +47,33 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class NewInfoActivity extends AppCompatActivity {
-    private ImageView newimg;
-    private TextView newintro;
+    private TextView title,type,new_time;
     private Handler mHandler;
     private String newid;
     private WebView webview_showpage;
-    private HtmlSpanner htmlSpanner;
+    private TitleBar mTitleBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_info);
         newid = getIntent().getStringExtra("newid");
-        newimg = findViewById(R.id.newimg);
         webview_showpage = findViewById(R.id.newintro);
+        title= findViewById(R.id.new_title);
+        type= findViewById(R.id.new_type);
+        new_time= findViewById(R.id.new_time);
+        mTitleBar = findViewById(R.id.newinfotitle);
         mHandler = new Handler();
+        initTitleBar();
         getinformation();
+    }
+//初始化titlebar
+    private void initTitleBar() {
+        mTitleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     //富文本设置
@@ -109,19 +122,20 @@ public class NewInfoActivity extends AppCompatActivity {
                     //取数据
                     if(result.get("status").equals("1"))
                     {
-                        //挂起
+
                         final JSONObject finalResult = new JSONObject(result.get("data").toString());
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 try {
-                                    Picasso.with(NewInfoActivity.this).load(finalResult.getString("pic").toString()).into(newimg);
-
+                                    title.setText(finalResult.getString("name"));
+                                    type.setText(finalResult.getString("cname"));
+                                    new_time.setText(finalResult.getString("time"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
-                        }, 0);
+                        },0);
                         final String res = finalResult.getString("intro").toString();
                         NewInfoActivity.this.runOnUiThread(new Runnable() {
                             public void run() {
