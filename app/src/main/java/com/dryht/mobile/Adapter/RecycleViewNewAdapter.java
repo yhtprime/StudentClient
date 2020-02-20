@@ -1,17 +1,14 @@
 package com.dryht.mobile.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dryht.mobile.Activity.NewInfoActivity;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.OnRecyclerItemClickListener;
 import com.squareup.picasso.Picasso;
@@ -70,11 +67,11 @@ public class RecycleViewNewAdapter extends RecyclerView.Adapter<RecycleViewNewAd
 
         public Holder(View itemView) {
             super(itemView);
-            tv_user_name = itemView.findViewById(R.id.tv_user_name);
+            tv_user_name = itemView.findViewById(R.id.newlist_name);
             tv_tag = itemView.findViewById(R.id.tv_tag);
-            tv_title = itemView.findViewById(R.id.tv_title);
-            radiusImageView = itemView.findViewById(R.id.iv_avatar);
-            iv_image = itemView.findViewById(R.id.iv_image);
+            tv_title = itemView.findViewById(R.id.newlist_title);
+            radiusImageView = itemView.findViewById(R.id.newlist_pic);
+            iv_image = itemView.findViewById(R.id.newlist_image);
             //将监听传递给自定义接口
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

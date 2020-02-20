@@ -5,17 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/friendinforefreshLayout"
+        style="@style/PullDownStyle"
+        android:layout_height="match_parent">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/moments_appbar_layout"
+            android:id="@+id/friend_appbar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/moments_collapse_layout"
+                android:id="@+id/friend_collapse_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:collapsedTitleTextAppearance="@style/ToolBarTitleText"
@@ -26,7 +30,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:fitsSystemWindows="true">
                 <LinearLayout
-                    android:id="@+id/moments_info_linear"
+                    android:id="@+id/friend_info_linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -36,25 +40,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="240dp"
                         android:background="@color/xui_config_color_gray_8">
+
                         <ImageView
-                            android:id="@+id/moments_background"
+                            android:id="@+id/friend_background"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:scaleType="centerCrop"/>
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/backgroundfriend" />
                         <LinearLayout
-                            android:id="@+id/moments_post"
+                            android:id="@+id/friend_post"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentRight="true"
                             android:clickable="true"
                             android:focusable="true">
+
                             <ImageView
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
-                                android:layout_marginTop="30dp"
                                 android:layout_marginLeft="30dp"
-                                android:src="@drawable/ic_launcher_background"/>
+                                android:layout_marginTop="30dp"
+                                android:src="@drawable/send" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -65,19 +72,28 @@
                             android:layout_marginBottom="15dp"
                             android:layout_marginRight="20dp"
                             android:orientation="vertical">
+
                             <TextView
-                                android:id="@+id/moments_text_name"
+                                android:id="@+id/friend_text_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="8dp"
+                                android:fontFamily="monospace"
+                                android:gravity="center"
+                                android:layout_weight="10000"
+                                android:text="桐ト"
                                 android:textColor="@color/white"
-                                android:layout_marginBottom="8dp"/>
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
                             <ImageView
-                                android:id="@+id/moments_icon"
+                                android:id="@+id/friend_icon"
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
                                 android:background="@color/white"
-                                android:padding="2dp"/>
+                                android:padding="2dp"
+                                app:srcCompat="@drawable/facesample" />
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
@@ -91,11 +107,11 @@
                     app:layout_scrollFlags="scroll|enterAlways"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:titleTextAppearance="@string/app_name"/>
+                    app:title="朋友圈"/>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/moments_tab_layout"
+                android:id="@+id/friend_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom"
@@ -109,21 +125,22 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="圈内动态"/>
+                    android:text="@string/qndt"/>
+
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="公开动态"/>
+                    android:text="@string/wddt" />
             </com.google.android.material.tabs.TabLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/moments_pager"
+            android:id="@+id/friend_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#ffffff"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

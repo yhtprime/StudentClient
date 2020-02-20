@@ -269,14 +269,9 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                                         }
                                                     }, 0);
                                                 }
-
-
-
                                             } catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
-
-
                                         }
                                         @Override
                                         public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
