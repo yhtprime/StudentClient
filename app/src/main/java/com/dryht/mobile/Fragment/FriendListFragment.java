@@ -71,7 +71,7 @@ public class FriendListFragment extends Fragment {
         OkHttpClient mOkHttpClient=new OkHttpClient();
         FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).build();
         Request mRequest;
-        if(flag==1){
+        if(flag==0){
             mRequest=new Request.Builder().url(Utils.generalUrl+"getfriendshare/").post(mFormBody).build();
         }
         else {

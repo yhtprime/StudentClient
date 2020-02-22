@@ -5,7 +5,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.dryht.mobile.R;
+import com.luck.picture.lib.PictureSelectionModel;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,5 +52,26 @@ public class Utils {
         randomColors.add(color);
         return Color.parseColor(color);
     }
+
+    /**
+     * 获取图片选择的配置
+     *
+     * @param fragment
+     * @return
+     */
+    public static PictureSelectionModel getPictureSelector(Fragment fragment) {
+        return PictureSelector.create(fragment)
+                .openGallery(PictureMimeType.ofImage())
+                .theme(SettingSPUtils.getInstance().isUseCustomTheme() ? R.style.XUIPictureStyle_Custom : R.style.XUIPictureStyle)
+                .maxSelectNum(8)
+                .minSelectNum(1)
+                .selectionMode(PictureConfig.MULTIPLE)
+                .previewImage(true)
+                .isCamera(true)
+                .enableCrop(false)
+                .compress(true)
+                .previewEggs(true);
+    }
+
 
 }

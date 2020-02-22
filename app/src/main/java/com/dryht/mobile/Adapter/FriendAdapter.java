@@ -50,7 +50,7 @@ public class FriendAdapter extends FragmentStatePagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         // 将实例化的fragment进行显示即可。
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
-        fragmentManager.beginTransaction().show(fragment).commit();
+        fragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
         return fragment;
     }
 

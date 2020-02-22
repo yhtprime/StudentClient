@@ -34,6 +34,10 @@ android {
             path file('CMakeLists.txt')
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -72,7 +76,15 @@ dependencies {
     implementation 'net.sourceforge.htmlcleaner:htmlcleaner:2.21'
     implementation 'com.osbcp:cssparser:1.7'
     implementation 'org.jsoup:jsoup:1.12.1'
+    //图片选择
+    implementation 'com.github.xuexiangjys.PictureSelector:picture-core:1.0.4'
+    //基础功能的工具类
+    implementation 'com.github.xuexiangjys.XUtil:xutil-core:1.1.6'
+    //附加功能的工具类
+    implementation 'com.github.xuexiangjys.XUtil:xutil-sub:1.1.6'
 
+    implementation "io.reactivex.rxjava2:rxjava:2.1.8"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 
 
 }
