@@ -92,7 +92,7 @@ public class FriendListFragment extends Fragment {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                FriendShareAdapter friendShareAdapter = new FriendShareAdapter(getContext(),jsonArray,R.layout.adapter_recycle_view_friend_item);
+                                FriendShareAdapter friendShareAdapter = new FriendShareAdapter(getContext(),jsonArray,R.layout.adapter_recycle_view_friend_item,mHandler);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(friendShareAdapter);
                             }

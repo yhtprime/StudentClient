@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.FriendSendActivity"></activity>
+        <activity android:name=".Activity.NoticeInfoActivity"></activity>
+        <activity android:name=".Activity.FriendInfoActivity" />
+        <activity android:name=".Activity.FriendSendActivity" />
         <activity android:name=".Activity.NewInfoActivity" />
         <activity android:name=".Activity.TabNewActivity" />
         <activity android:name=".Activity.MainActivity">
