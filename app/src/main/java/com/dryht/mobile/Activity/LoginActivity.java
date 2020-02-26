@@ -125,6 +125,9 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("auth", result.get("auth").toString());
                             //获取登录人得身份1为学生0为老师
                             editor.putString("identity", result.get("identity").toString());
+                            editor.putString("name", result.get("name").toString());
+                            editor.putString("intro", result.get("intro").toString());
+                            editor.putString("pic", result.get("pic").toString());
                             //步骤4：提交
                             editor.commit();
                             Intent intent = new Intent(LoginActivity.this,MainActivity.class);

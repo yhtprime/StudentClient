@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: net.sourceforge.htmlcleaner:htmlcleaner:2.21@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlcleaner/htmlcleaner/2.21/bef19968c9f2b458981e44b0d79eeea754126f98/htmlcleaner-2.21.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlcleaner/htmlcleaner/2.21/6b16946c0e906bd0d1339de7951fac50fc9501a2/htmlcleaner-2.21-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlcleaner/htmlcleaner/2.21/56360092b2a8345d564f97ec39ca07dc57492481/htmlcleaner-2.21-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

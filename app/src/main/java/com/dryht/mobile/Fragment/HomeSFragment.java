@@ -14,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.dryht.mobile.Activity.ClassInfoActivity;
 import com.dryht.mobile.Activity.FdActivity;
 
+import com.dryht.mobile.Activity.MainActivity;
 import com.dryht.mobile.Activity.TabNewActivity;
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 
@@ -27,6 +29,7 @@ import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.recycler.BannerLayout;
 import com.xuexiang.xui.widget.button.RippleView;
 import com.xuexiang.xui.widget.textview.MarqueeTextView;
@@ -35,6 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.Calendar;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -57,11 +61,13 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     private TextView banner_title;
     private RippleView checkbtn;
     private TextView check_btn_text;
-    private ImageView startrecogn;
     private Handler mHandler;
     private JSONArray Top5News = null;
+    private TitleBar titleBar;
     private RecyclerViewBannerAdapter mAdapterHorizontal;
     private SharedPreferences sharedPreferences;
+    private ConstraintLayout constraintLayout;
+    private TextView moreviews;
 
     public HomeSFragment() {
         // Required empty public constructor
@@ -82,13 +88,13 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
         intro = view.findViewById(R.id.comment_intro);
         pm = view.findViewById(R.id.pm);
         temp_advice = view.findViewById(R.id.temp_advice);
-        mTvMarquee = view.findViewById(R.id.tv_marquee);
+        titleBar = view.findViewById(R.id.home_titlebar);
+        moreviews = view.findViewById(R.id.morenews);
         bannerLayout = view.findViewById(R.id.home_banner);
         banner_title = view.findViewById(R.id.home_banner_title);
         checkbtn = view.findViewById(R.id.check_btn);
         check_btn_text = view.findViewById(R.id.check_btn_text);
-        startrecogn = view.findViewById(R.id.startrecogn);
-        startrecogn.setOnClickListener(new startrecognListener());
+        constraintLayout = view.findViewById(R.id.check_layout);
     }
 
     @Override
@@ -97,6 +103,42 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_home, container, false);
         sharedPreferences= getContext().getSharedPreferences("data", Context.MODE_PRIVATE);
         initComponent();
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(calendar.HOUR_OF_DAY);
+        if(hour<=10)
+        {
+            constraintLayout.setBackgroundResource(R.drawable.morning);
+            constraintLayout.getBackground().mutate().setAlpha(100);
+        }
+        else if (hour<=12)
+        {
+            constraintLayout.setBackgroundResource(R.drawable.nooning);
+            constraintLayout.getBackground().mutate().setAlpha(100);
+        }
+        else if (hour<17)
+        {
+            constraintLayout.setBackgroundResource(R.drawable.afternoon);
+            constraintLayout.getBackground().mutate().setAlpha(100);
+        }
+        else if (hour>=17)
+        {
+            constraintLayout.setBackgroundResource(R.drawable.evening);
+            constraintLayout.getBackground().mutate().setAlpha(100);
+        }
+        titleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
+        titleBar.setLeftClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.mSlidingRootNav.openMenu();
+            }
+        });
+        moreviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TabNewActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -136,17 +178,6 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
-        mTvMarquee.addDisplayString("《《《欢迎使用校园小助手，更多校园信息请点击这里》》》");
-        mTvMarquee.setSpeed(7);
-        mTvMarquee.startRoll();
-        mTvMarquee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), TabNewActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
 
 
@@ -299,22 +330,6 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-    }
-
-    //设置人脸
-    private class startrecognListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            //创建Intent对象
-            Intent intent=new Intent();
-            //将参数放入intent
-            intent.putExtra("flag", 3);
-            //跳转到指定的Activity
-            intent.setClass(getContext(), FdActivity.class);
-            //启动Activity
-            startActivity(intent);
-
-        }
     }
 
     @Override

@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.xuexiangjys.XUtil:xutil-sub:1.1.6@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/43fd3016b1ff078c713fc01b741ab31c/jetified-xutil-sub-1.1.6/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/43fd3016b1ff078c713fc01b741ab31c/jetified-xutil-sub-1.1.6/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/43fd3016b1ff078c713fc01b741ab31c/jetified-xutil-sub-1.1.6/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xuexiangjys.XUtil/xutil-sub/1.1.6/af20071e53caddd8e6e4cbc3643b04a983e0bff7/xutil-sub-1.1.6-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.xuexiangjys.XUtil/xutil-sub/1.1.6/7c60f84195cd09ff55ebe5e0d40b4458729552c/xutil-sub-1.1.6-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

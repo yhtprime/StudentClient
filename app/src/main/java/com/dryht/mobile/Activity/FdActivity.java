@@ -374,6 +374,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                             }
                         builder.addFormDataPart("auth",sharedPreferences.getString("auth","0"));
                         builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
+                        if(classid!=null)
                         builder.addFormDataPart("classid",classid);
                         Request mRequest=new Request.Builder()
                                 .url(com.dryht.mobile.Util.Utils.generalUrl+baseUrl)
@@ -396,9 +397,9 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                         filename=null;
                                         Intent intent=new Intent();
                                         if(limit>1)
-                                            XToastUtils.toast("人脸录制成功");
+                                            XToastUtils.success("人脸录制成功");
                                         else
-                                            XToastUtils.toast("人脸识别成功");
+                                            XToastUtils.success("人脸识别成功");
                                         //跳转到指定的Activity
                                         intent.setClass(FdActivity.this, MainActivity.class);
                                         //启动Activity
@@ -409,9 +410,9 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                     else
                                     {
                                         if(limit>1)
-                                            XToastUtils.toast("人脸录制失败");
+                                            XToastUtils.error("人脸录制失败");
                                         else
-                                            XToastUtils.toast("人脸识别失败");
+                                            XToastUtils.error("人脸识别失败");
                                         Intent intent=new Intent();
                                         //跳转到指定的Activity
                                         intent.setClass(FdActivity.this, MainActivity.class);

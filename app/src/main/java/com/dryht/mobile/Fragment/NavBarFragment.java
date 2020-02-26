@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.NoScrollViewPager;
@@ -17,7 +18,8 @@ import com.dryht.mobile.Util.NoScrollViewPager;
 public class NavBarFragment extends Fragment {
     private View view;
     NoScrollViewPager viewPager;
-    private ImageView home,classes,friend,notice,me;
+    private ImageView home,classes,friend,notice;
+    private LinearLayout Linearhome,Linearclasses ,Linearfriend,Linearnotice;
     public NavBarFragment() {
         // Required empty public constructor
     }
@@ -38,11 +40,10 @@ public class NavBarFragment extends Fragment {
     }
     //监听所有组件
     private void dealcompent() {
-        home.setOnClickListener(new swicthpage(1));
-        classes.setOnClickListener(new swicthpage(2));
-        friend.setOnClickListener(new swicthpage(3));
-        notice.setOnClickListener(new swicthpage(4));
-        me.setOnClickListener(new swicthpage(5));
+        Linearhome.setOnClickListener(new swicthpage(1));
+        Linearclasses.setOnClickListener(new swicthpage(2));
+        Linearfriend.setOnClickListener(new swicthpage(3));
+        Linearnotice.setOnClickListener(new swicthpage(4));
     }
 
     //初始化组件
@@ -51,8 +52,11 @@ public class NavBarFragment extends Fragment {
         classes = view.findViewById(R.id.nav_class);
         friend = view.findViewById(R.id.nav_friend);
         notice = view.findViewById(R.id.nav_notice);
-        me = view.findViewById(R.id.nav_me);
         viewPager = getActivity().findViewById(R.id.vp);
+        Linearhome = view.findViewById(R.id.Linearhome);
+        Linearclasses = view.findViewById(R.id.Linearclasses);
+        Linearfriend = view.findViewById(R.id.Linearfriend);
+        Linearnotice = view.findViewById(R.id.Linearnotice);;
     }
 
     private class swicthpage implements View.OnClickListener {
@@ -66,7 +70,6 @@ public class NavBarFragment extends Fragment {
             classes.setImageDrawable(getResources().getDrawable(R.drawable.classn));
             friend.setImageDrawable(getResources().getDrawable(R.drawable.friend));
             notice.setImageDrawable(getResources().getDrawable(R.drawable.notice));
-            me.setImageDrawable(getResources().getDrawable(R.drawable.me));
         }
 
         @Override
@@ -89,10 +92,6 @@ public class NavBarFragment extends Fragment {
                 case 4:
                     viewPager.setCurrentItem(3);
                     notice.setImageDrawable(getResources().getDrawable(R.drawable.noticec));
-                    break;
-                case 5:
-                    viewPager.setCurrentItem(4);
-                    me.setImageDrawable(getResources().getDrawable(R.drawable.mec));
                     break;
             }
         }
