@@ -69,12 +69,18 @@ public class FriendListFragment extends Fragment {
         super.onStart();
         //朋友圈动态
         OkHttpClient mOkHttpClient=new OkHttpClient();
+
         FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).build();
-        Request mRequest;
+        Request mRequest = null;
         if(flag==0){
             mRequest=new Request.Builder().url(Utils.generalUrl+"getfriendshare/").post(mFormBody).build();
         }
-        else {
+        else if(flag==1) {
+            mRequest=new Request.Builder().url(Utils.generalUrl+"getmyshare/").post(mFormBody).build();
+        }
+        if (flag==2)
+        {
+            mFormBody=new FormBody.Builder().add("id",sharedPreferences.getString("id",null)).add("auth",sharedPreferences.getString("auth",null)).add("iden",sharedPreferences.getString("iden",null)).add("identity",sharedPreferences.getString("identity",null)).build();
             mRequest=new Request.Builder().url(Utils.generalUrl+"getmyshare/").post(mFormBody).build();
         }
         mOkHttpClient.newCall(mRequest).enqueue(new Callback(){

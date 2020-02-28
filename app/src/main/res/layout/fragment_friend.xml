@@ -46,6 +46,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
+                            android:alpha="0.8"
                             app:srcCompat="@drawable/backgroundfriend" />
                         <LinearLayout
                             android:id="@+id/friend_post"

@@ -76,10 +76,14 @@ public class LoginActivity extends AppCompatActivity {
 
         }
         login.setOnClickListener(new loginListener());
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this,ChangePwdActivity.class);
+                startActivity(intent);
+            }
+        });
 
-//        SharedPreferences sharedPreferences= getSharedPreferences("data", Context .MODE_PRIVATE);
-//        String userId=sharedPreferences.getString("authen","");
-//        System.out.println(userId+"*************************************");
     }
 
     private void initcomponent() {

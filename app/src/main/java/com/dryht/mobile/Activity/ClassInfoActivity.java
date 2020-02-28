@@ -79,6 +79,7 @@ public class ClassInfoActivity extends AppCompatActivity {
         mGroupListView = findViewById(R.id.classGroupListView);
         refreshLayout = (RefreshLayout)findViewById(R.id.classinforefreshLayout);
         mTitleBar = findViewById(R.id.classinfotitle);
+        mTitleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         recyclerView = findViewById(R.id.classcomments);
         refreshLayout.setOnRefreshListener(new refreshListener());
         refreshLayout.autoRefresh();
@@ -140,17 +141,18 @@ public class ClassInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 finish();
             }
-        }).setCenterClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                XToastUtils.toast("点击标题");
-            }
-        }).addAction(new TitleBar.ImageAction(R.drawable.ic_add_white_24dp) {
-            @Override
-            public void performAction(View view) {
-                XToastUtils.toast("点击更多！");
-            }
         });
+        if (sharedPreferences.getString("identity",null).equals("0"))
+        {
+            mTitleBar.addAction(new TitleBar.TextAction("发送消息") {
+                @Override
+                public void performAction(View view) {
+                    Intent intent = new Intent(ClassInfoActivity.this,SendNoticeClassActivity.class);
+                    intent.putExtra("classid",classid);
+                    startActivity(intent);
+                }
+            });
+        }
     }
     private void initGroupListView() {
         OkHttpClient mOkHttpClient=new OkHttpClient();

@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Activity.PersonActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/person_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_collapseMode="pin"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="45dp"
+        app:tb_sideTextPadding="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_subTitleText=""
+        app:tb_titleText="个人中心"
+        android:textSize="28dp" />
+<com.scwang.smartrefresh.layout.SmartRefreshLayout style="@style/PullDownStyle">
+
+    <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                android:id="@+id/changeinfo"
+                style="@style/InfoItem.Account"
+                android:layout_height="60dp"
+                app:sLeftTextString="修改信息">
+
+            </com.xuexiang.xui.widget.textview.supertextview.SuperTextView>
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                android:id="@+id/showlike"
+                style="@style/InfoItem.Account"
+                app:sLeftTextString="我的关注" />
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                android:id="@+id/changepasswd"
+                style="@style/InfoItem.Account"
+                app:sLeftTextString="账号与安全"
+                app:sRightTextString="已保护"
+                app:sRightTvDrawableLeft="@drawable/icon_crown" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>

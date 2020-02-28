@@ -10,17 +10,13 @@
         android:id="@+id/search_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:defaultQueryHint="请输入班级名称"
-        app:queryHint="请输入班级名称"
+        android:layout_marginTop="10dp"
         android:background="@drawable/search_style"
+        app:defaultQueryHint="请输入班级名称"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
-    </androidx.appcompat.widget.SearchView>
-
-
-
+        app:queryHint="请输入班级名称"></androidx.appcompat.widget.SearchView>
 
     <cn.devmeteor.tableview.TableView
         android:id="@+id/main_table"

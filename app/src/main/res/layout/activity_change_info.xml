@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.ChangeInfoActivity">
+
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/change_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_collapseMode="pin"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="45dp"
+        app:tb_leftImageResource="@drawable/ic_menu"
+        app:tb_sideTextPadding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_subTitleText=""
+        app:tb_titleText="修改信息"
+        android:textSize="28dp" />
+
+
+    <com.xuexiang.xui.widget.edittext.MultiLineEditText
+        android:id="@+id/change_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_titlebar"
+        app:mlet_hintText="在这里输入您的个人简介用于在朋友圈展示你自己" />
+
+    <com.xuexiang.xui.widget.button.ButtonView
+        android:id="@+id/changeinfo_sub_btn"
+        style="@style/ButtonView.Green"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="44dp"
+        android:text="提交"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_intro" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

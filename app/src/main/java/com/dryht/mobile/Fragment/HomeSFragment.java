@@ -68,6 +68,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences sharedPreferences;
     private ConstraintLayout constraintLayout;
     private TextView moreviews;
+    private ImageView weather;
 
     public HomeSFragment() {
         // Required empty public constructor
@@ -91,6 +92,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
         titleBar = view.findViewById(R.id.home_titlebar);
         moreviews = view.findViewById(R.id.morenews);
         bannerLayout = view.findViewById(R.id.home_banner);
+        weather = view.findViewById(R.id.weather);
         banner_title = view.findViewById(R.id.home_banner_title);
         checkbtn = view.findViewById(R.id.check_btn);
         check_btn_text = view.findViewById(R.id.check_btn_text);
@@ -441,9 +443,9 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                             @Override
                             public void run() {
                                 try {
-                                    temp.setText(finalResult.get("temp").toString());
-                                    intro.setText("详细天气情况："+ finalResult.get("intro").toString());
-                                    pm.setText("pm2.5指数："+ finalResult.get("pm").toString());
+                                    temp.setText(finalResult.get("temp").toString()+"°C");
+                                    intro.setText(finalResult.get("intro").toString());
+                                    pm.setText("  pm指数："+ finalResult.get("pm").toString());
                                     String pmadvice = null;
                                     String tempadvice = null;
                                     if(Integer.parseInt(finalResult.get("pm").toString())>50)
@@ -455,6 +457,26 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                     else
                                         tempadvice = "温度适宜";
                                     temp_advice.setText(tempadvice+pmadvice);
+                                    if (finalResult.get("weather").toString().equals("多云"))
+                                    {
+                                        weather.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloudy));
+                                    }
+                                    else if(finalResult.get("weather").toString().equals("晴"))
+                                    {
+                                        weather.setImageDrawable(getResources().getDrawable(R.drawable.ic_sunny));
+                                    }
+                                    else if(finalResult.get("weather").toString().equals("阴"))
+                                    {
+                                        weather.setImageDrawable(getResources().getDrawable(R.drawable.ic_cloudy));
+                                    }
+                                    else if(finalResult.get("weather").toString().equals("雨"))
+                                    {
+                                        weather.setImageDrawable(getResources().getDrawable(R.drawable.ic_rain));
+                                    }
+                                    else if(finalResult.get("weather").toString().equals("雪"))
+                                    {
+                                        weather.setImageDrawable(getResources().getDrawable(R.drawable.ic_snow));
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

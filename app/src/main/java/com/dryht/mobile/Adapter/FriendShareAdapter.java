@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dryht.mobile.Activity.FriendInfoActivity;
+import com.dryht.mobile.Activity.InfomationActivity;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
@@ -94,6 +95,31 @@ public class FriendShareAdapter extends RecyclerView.Adapter<FriendShareAdapter.
                         e.printStackTrace();
                     }
 
+                }
+            });
+            holder.sharePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        System.out.println("---------");
+                        Intent intent = new Intent(mContext, InfomationActivity.class);
+                        intent.putExtra("circleid",mData.getJSONObject(position).get("circleid").toString());
+                        mContext.startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            holder.shareName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        Intent intent = new Intent(mContext, InfomationActivity.class);
+                        intent.putExtra("circleid",mData.getJSONObject(position).get("circleid").toString());
+                        mContext.startActivity(intent);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             holder.sharebtn_zan.setOnClickListener(new View.OnClickListener() {

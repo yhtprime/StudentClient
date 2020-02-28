@@ -18,7 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.PersonActivity"></activity>
+        <activity android:name=".Activity.SendNoticeClassActivity"></activity>
+        <activity android:name=".Activity.SearchFriendActivity" />
+        <activity android:name=".Activity.InfomationActivity" />
+        <activity android:name=".Activity.ChangePwdActivity" />
+        <activity android:name=".Activity.PersonLikeActivity" />
+        <activity android:name=".Activity.ChangeInfoActivity" />
+        <activity android:name=".Activity.PersonActivity" />
         <activity android:name=".Activity.NoticeInfoActivity" />
         <activity android:name=".Activity.FriendInfoActivity" />
         <activity android:name=".Activity.FriendSendActivity" />

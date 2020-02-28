@@ -12,8 +12,8 @@
         android:layout_height="55dp"
         app:tb_actionPadding="20dp"
         app:tb_barHeight="55dp"
-        app:tb_dividerColor="@color/xui_config_color_blue"
-        app:tb_leftImageResource="@drawable/icon_back_white"
+        app:tb_dividerColor="@color/thiscolor"
+        app:tb_leftImageResource="@drawable/back"
         app:tb_leftText="返回"
         app:tb_sideTextPadding="20dp"
         app:tb_subTitleText=""
@@ -24,7 +24,8 @@
         android:id="@+id/classinforefreshLayout"
         style="@style/PullDownStyle"
         android:layout_height="wrap_content"
-        android:layout_below="@id/classinfotitle">
+        android:layout_below="@id/classinfotitle"
+        android:layout_above="@+id/sendclasscomment">
             <androidx.core.widget.NestedScrollView style="@style/ScrollViewStyle">
                 <LinearLayout
                     android:layout_width="match_parent"

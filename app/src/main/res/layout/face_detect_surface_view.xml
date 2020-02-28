@@ -16,49 +16,18 @@
 
     </org.opencv.android.JavaCameraView>
 
-    <ImageView
-        android:id="@+id/image1"
+    <TextView
+        android:id="@+id/hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:text="开始进行人脸识别"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.469"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/javaCameraView"></ImageView>
+        app:layout_constraintTop_toBottomOf="@+id/javaCameraView"></TextView>
 
-    <TextView
-        android:id="@+id/tv_frontal_face_number"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_current_number"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"></TextView>
 
-    <TextView
-        android:id="@+id/tv_profile_face_number"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_wait_time"></TextView>
-
-    <TextView
-        android:id="@+id/tv_current_number"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_wait_time"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_frontal_face_number"></TextView>
-
-    <TextView
-        android:id="@+id/tv_wait_time"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_profile_face_number"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_current_number"></TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

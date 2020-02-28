@@ -19,7 +19,7 @@
     android:id="@+id/ll_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E7F3FB"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <Space

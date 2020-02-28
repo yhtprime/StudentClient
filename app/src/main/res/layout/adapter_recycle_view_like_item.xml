@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frienditem"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+        android:id="@+id/like_name"
+        style="@style/InfoItem.Account"
+        android:layout_height="60dp"
+        app:sLeftTextString="头像">
+
+    <com.xuexiang.xui.widget.imageview.RadiusImageView
+        android:id="@+id/like_pic"
+        style="@style/RadiusImageView.Circle"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/sRightImgId"
+         />
+    </com.xuexiang.xui.widget.textview.supertextview.SuperTextView>
+</LinearLayout>

@@ -87,6 +87,8 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     private int limit = 0;
     //考勤的课程
     private String classid;
+    private String account;
+    private String passwd;
     private Rect[] mFrontalFacesArray;
     private Rect[] mProfileFacesArray;
     //保留正脸数据用于分析性别和年龄
@@ -94,11 +96,8 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
 
     private Mat mRgba; //图像容器
     private Mat mGray;
-    private TextView mFrontalFaceNumber;
-    private TextView mProfileFaceNumber;
-    private TextView mCurrentNumber;
-    private TextView mWaitTime;
-    private ImageView imageView;
+    private TextView hint;
+
 
     private int mFrontFaces = 0;
     private int mProfileFaces = 0;
@@ -144,6 +143,8 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         //获取flag判断是录入还是识别
         limit =  getIntent().getIntExtra("flag",1);
         classid =  getIntent().getStringExtra("classid");
+        passwd = getIntent().getStringExtra("passwd");
+        account = getIntent().getStringExtra("account");
         if(limit>1)
             baseUrl = "recordfacedata/";
         else
@@ -178,11 +179,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
      */
     protected void initComponent() {
         openCvCameraView = findViewById(R.id.javaCameraView);
-        mFrontalFaceNumber = findViewById(R.id.tv_frontal_face_number);
-        mProfileFaceNumber = findViewById(R.id.tv_profile_face_number);
-        mCurrentNumber = findViewById(R.id.tv_current_number);
-        mWaitTime = findViewById(R.id.tv_wait_time);
-        imageView = findViewById(R.id.image1);
+        hint = findViewById(R.id.hint);
     }
 
     /**
@@ -357,12 +354,19 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                     faceimage = new Mat(Matlin,facerect);
                     //把mat转换成bitmap
                     saveImg(faceimage);
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hint.setText("还需录入"+(limit-file.size()+1)+"次");
+                        }
+                    },0);
                     if (file.size()>limit)
                     {
                         //挂起
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+                                hint.setText("正在上传数据");
                                 openCvCameraView.disableView();
                             }
                         }, 0);
@@ -376,6 +380,10 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                         builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
                         if(classid!=null)
                         builder.addFormDataPart("classid",classid);
+                        if(passwd!=null)
+                        builder.addFormDataPart("passwd",passwd);
+                        if(account!=null)
+                        builder.addFormDataPart("account",account);
                         Request mRequest=new Request.Builder()
                                 .url(com.dryht.mobile.Util.Utils.generalUrl+baseUrl)
                                 .post(builder.build())
@@ -390,6 +398,10 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                 try {
                                     result = new JSONObject(response.body().string());
                                     System.out.println(result.get("status"));
+                                    for (int i = 0;i<file.size();i++) {
+                                        File f = new File(String.valueOf(file.get(i)));
+                                        f.delete();
+                                    }
                                     //取数据
                                     if(result.get("status").equals("1"))
                                     {
@@ -400,11 +412,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                             XToastUtils.success("人脸录制成功");
                                         else
                                             XToastUtils.success("人脸识别成功");
-                                        //跳转到指定的Activity
-                                        intent.setClass(FdActivity.this, MainActivity.class);
-                                        //启动Activity
-                                        startActivity(intent);
-                                        onDestroy();
+                                        finish();
 
                                     }
                                     else
@@ -413,12 +421,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                             XToastUtils.error("人脸录制失败");
                                         else
                                             XToastUtils.error("人脸识别失败");
-                                        Intent intent=new Intent();
-                                        //跳转到指定的Activity
-                                        intent.setClass(FdActivity.this, MainActivity.class);
-                                        //启动Activity
-                                        startActivity(intent);
-
+                                        finish();
                                     }
 
                                 } catch (JSONException e) {

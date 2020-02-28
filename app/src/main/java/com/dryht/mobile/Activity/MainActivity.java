@@ -113,8 +113,9 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new DrawerAdapter(Arrays.asList(
                 createItemFor(0),
                 createItemFor(1),
+                createItemFor(2),
                 new SpaceItem(48),
-                createItemFor(3)));
+                createItemFor(4)));
         mAdapter.setListener(this::onItemSelected);
         RecyclerView list = findViewById(R.id.list);
         list.setNestedScrollingEnabled(false);
@@ -131,30 +132,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onItemSelected(int position) {
+        Intent intent=new Intent();
         switch (position) {
             case 0:
+                //创建Intent对象
+                intent=new Intent();
+                //跳转到指定的Activity
+                intent.setClass(MainActivity.this, PersonActivity.class);
+                //启动Activity
+                startActivity(intent);
+                onStop();
                 break;
             case 1:
                 //创建Intent对象
-                Intent intent=new Intent();
+                intent=new Intent();
                 //将参数放入intent
                 intent.putExtra("flag", 3);
                 //跳转到指定的Activity
                 intent.setClass(MainActivity.this, FdActivity.class);
                 //启动Activity
                 startActivity(intent);
+                onStop();
                 break;
             case 2:
-//                if (mTabLayout != null) {
-//                    TabLayout.Tab tab = mTabLayout.getTabAt(position);
-//                    if (tab != null) {
-//                        tab.select();
-//                    }
-//                }
-//                mSlidingRootNav.closeMenu();
-//                openNewPage(AboutFragment.class);
+                //创建Intent对象
+                intent=new Intent();
+                //跳转到指定的Activity
+                intent.setClass(MainActivity.this, SearchFriendActivity.class);
+                //启动Activity
+                startActivity(intent);
+                onStop();
                 break;
-            case 3:
+            case 4:
                 DialogLoader.getInstance().showConfirmDialog(
                         this,
                         getString(R.string.lab_logout_confirm),
@@ -194,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //全屏
-        StatusBarUtils.fullScreen(this);
+//        StatusBarUtils.fullScreen(this);
     }
 
     /**

@@ -14,23 +14,23 @@
         android:layout_weight="1"
         android:background="@drawable/bg_border"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_width="40dp"
             android:id="@+id/nav_home"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/homec">
-        </ImageView>
+            android:src="@drawable/homec"></ImageView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="首頁"
-            android:textFontWeight="500"
-            android:textSize="18sp"
             android:layout_gravity="center"
             android:gravity="center"
-            >
+            android:text="首頁"
+            android:textFontWeight="500"
+            android:textSize="15sp">
 
         </TextView>
         </LinearLayout>
@@ -41,14 +41,14 @@
         android:layout_weight="1"
         android:background="@drawable/bg_border"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_width="40dp"
             android:id="@+id/nav_class"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/classn">
-        </ImageView>
+            android:src="@drawable/classn"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:gravity="center"
             android:text="課程表"
             android:textFontWeight="500"
-            android:textSize="18sp">
+            android:textSize="15sp">
 
         </TextView>
         </LinearLayout>
@@ -68,14 +68,14 @@
         android:layout_weight="1"
         android:background="@drawable/bg_border"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_width="40dp"
             android:id="@+id/nav_friend"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:src="@drawable/friend">
-        </ImageView>
+            android:src="@drawable/friend"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             android:gravity="center"
             android:text="朋友圈"
             android:textFontWeight="500"
-            android:textSize="18sp">
+            android:textSize="15sp">
 
         </TextView>
         </LinearLayout>
@@ -95,15 +95,15 @@
         android:layout_weight="1"
         android:background="@drawable/bg_border"
         android:orientation="vertical">
+
         <ImageView
-            android:layout_width="40dp"
             android:id="@+id/nav_notice"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
 
-            android:src="@drawable/notice">
-        </ImageView>
+            android:src="@drawable/notice"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
             android:gravity="center"
             android:text="通知"
             android:textFontWeight="500"
-            android:textSize="18sp">
+            android:textSize="15sp">
 
         </TextView>
         </LinearLayout>

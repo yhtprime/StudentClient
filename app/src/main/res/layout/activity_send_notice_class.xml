@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/notice_class_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="1dp"
+        app:layout_collapseMode="pin"
+        app:layout_constraintBottom_toTopOf="@+id/newintro"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="45dp"
+        app:tb_dividerColor="@color/xui_config_color_blue"
+        app:tb_leftImageResource="@drawable/icon_back_white"
+        app:tb_leftText="返回"
+        app:tb_sideTextPadding="20dp"
+        app:tb_subTitleText=""
+        app:tb_titleText="发布说说" />
+
+    <com.xuexiang.xui.widget.edittext.ClearEditText
+        android:id="@+id/notice_class_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        android:hint="请输入主题"
+        android:textFontWeight="1000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <com.xuexiang.xui.widget.edittext.MultiLineEditText
+        android:id="@+id/notice_class_intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+
+    <com.xuexiang.xui.widget.button.ButtonView
+        android:id="@+id/notice_class_send"
+        style="@style/ButtonView.Blue"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="20dp"
+        android:layout_marginTop="50dp"
+        android:text="发送" />
+
+</LinearLayout>
