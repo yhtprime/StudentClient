@@ -62,6 +62,7 @@ public class NewInfoActivity extends AppCompatActivity {
         type= findViewById(R.id.new_type);
         new_time= findViewById(R.id.new_time);
         mTitleBar = findViewById(R.id.newinfotitle);
+        mTitleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         mHandler = new Handler();
         initTitleBar();
         getinformation();

@@ -58,6 +58,7 @@ public class NoticeFragment extends Fragment{
     private androidx.appcompat.widget.SearchView mSearchView;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
+
     public NoticeFragment() {
         // Required empty public constructor
     }

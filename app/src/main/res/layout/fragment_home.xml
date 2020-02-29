@@ -172,6 +172,7 @@
                     android:layout_weight="1"
                     android:gravity="left"
                     android:text="15°C"
+                    android:layout_marginTop="12dp"
                     android:textColor="@color/white"
                     android:textSize="50dp"
                     tools:layout_editor_absoluteX="10dp" />

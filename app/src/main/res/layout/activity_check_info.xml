@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.CheckInfoActivity"
+    android:orientation="vertical">
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/checkinfotitle"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentTop="true"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="55dp"
+        app:tb_dividerColor="@color/thiscolor"
+        app:tb_leftImageResource="@drawable/back"
+        app:tb_leftText="返回"
+        app:tb_sideTextPadding="20dp"
+        app:tb_subTitleText=""
+        app:tb_titleText="考勤结果" />
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="250dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/checkinfo_recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

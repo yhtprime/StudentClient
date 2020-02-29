@@ -28,7 +28,7 @@
             app:tb_actionPadding="20dp"
             app:tb_barHeight="45dp"
             app:tb_dividerColor="@color/xui_config_color_blue"
-            app:tb_leftImageResource="@drawable/icon_back_white"
+            app:tb_leftImageResource="@drawable/back"
             app:tb_leftText="返回"
             app:tb_sideTextPadding="20dp"
             app:tb_subTitleText=""
@@ -78,7 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textNoSuggestions"
-            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,6 +97,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/noticeChart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/noticeinfo_recycle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

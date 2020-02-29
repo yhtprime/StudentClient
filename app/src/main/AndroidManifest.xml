@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 文件操作 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".Util.XUIApplication"
@@ -18,7 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SendNoticeClassActivity"></activity>
+        <activity android:name=".Activity.CheckInfoActivity"></activity>
+        <activity android:name=".Activity.CheckHistoryActivity" />
+        <activity android:name=".Activity.SendNoticeClassActivity" />
         <activity android:name=".Activity.SearchFriendActivity" />
         <activity android:name=".Activity.InfomationActivity" />
         <activity android:name=".Activity.ChangePwdActivity" />

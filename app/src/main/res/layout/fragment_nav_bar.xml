@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/nav_home"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:src="@drawable/homec"></ImageView>
@@ -44,8 +44,8 @@
 
         <ImageView
             android:id="@+id/nav_class"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:src="@drawable/classn"></ImageView>
@@ -71,7 +71,7 @@
 
         <ImageView
             android:id="@+id/nav_friend"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -98,8 +98,8 @@
 
         <ImageView
             android:id="@+id/nav_notice"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_weight="1"
 
