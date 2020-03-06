@@ -66,7 +66,11 @@ public class NoticeInfoActivity extends AppCompatActivity {
             gettnoticeinfo();
         }
         else
+        {
+            pieChart.setVisibility(View.INVISIBLE);
             getnoticeinfo();
+        }
+
     }
 
     private void gettnoticeinfo() {

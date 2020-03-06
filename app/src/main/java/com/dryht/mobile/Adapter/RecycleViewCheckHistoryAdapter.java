@@ -45,7 +45,7 @@ public class RecycleViewCheckHistoryAdapter extends RecyclerView.Adapter<Recycle
         try {
             holder.history_name.setText(this.mData.getJSONObject(position).get("name").toString());
             holder.history_time.setText(this.mData.getJSONObject(position).get("time").toString());
-            if (this.mData.getJSONObject(position).get("status").toString().equals("0"))
+            if (this.mData.getJSONObject(position).get("status").toString().equals("1"))
             {
                 holder.history_status.setText("考勤中");
                 holder.history_status.setTextColor(mContext.getColor(R.color.md_green_300));

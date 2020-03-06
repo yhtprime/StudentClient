@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.button.ButtonView;
 
 import org.jetbrains.annotations.NotNull;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initcomponent();
+
         // 在要调用权限的activity中插入该方法。可以写到onCreate()中。
     // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -86,11 +89,15 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void initcomponent() {
+    private void initcomponent(){
         account = findViewById(R.id.account);
         password = findViewById(R.id.password);
         forget = findViewById(R.id.forget);
         login = findViewById(R.id.login_btn);
+        StatusBarUtils.setStatusBarLightMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.xui_btn_blue_normal_color));
+//        this.getWindow().setNavigationBarColor(getResources().getColor(R.color.thiscolor));
+//        StatusBarUtils.setNavigationBarColor(this,getResources().getColor(R.color.thiscolor));
     }
 
 

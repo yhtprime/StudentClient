@@ -14,7 +14,7 @@
         android:ems="10"
         android:hint="请输入账号"
         android:inputType="textPersonName"
-        android:text="13422"
+        android:text="1111"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
         android:ems="10"
         android:hint="请输入密码"
         android:inputType="textPassword"
-        android:text="13422"
+        android:text="1111"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/account" />
@@ -38,22 +38,25 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
         android:fontFamily="serif"
-        android:text="欢迎使用校园小助手"
+        android:text="东软校园智能助手"
+        android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/account"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.xuexiang.xui.widget.button.ButtonView
         android:id="@+id/login_btn"
-        style="@style/ButtonView.Green"
+        style="@style/ButtonView.Blue"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_margin="20dp"
         android:layout_marginTop="50dp"
-        android:text="Login In"
+        android:text="登录"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />

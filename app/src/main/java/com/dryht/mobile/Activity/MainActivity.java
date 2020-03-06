@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         //添加底部导航上去
         fragmentTransaction.add(R.id.Nav_btn, new NavBarFragment()).commit();
 
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
+
          mVp = findViewById(R.id.vp);
          sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
         if(sharedPreferences.getString("identity",null)==null||sharedPreferences.getString("identity","1").equals("1"))

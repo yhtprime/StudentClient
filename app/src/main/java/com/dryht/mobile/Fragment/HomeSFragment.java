@@ -162,7 +162,6 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                         Top5News.getJSONObject(4).get("pic").toString(),
                 };
                 bannerLayout.setAdapter(mAdapterHorizontal = new RecyclerViewBannerAdapter(urls));
-                bannerLayout.setAutoPlaying(true);
                 banner_title.setText(Top5News.getJSONObject(0).get("name").toString());
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -244,7 +243,14 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                                             checkbtn.setEnabled(false);
                                                             try {
                                                                 check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
-                                                                check_btn_text.setText(finalResult.get("result").toString());
+                                                                class_place.setText("");
+                                                                course_name.setText("");
+                                                                time.setText("");
+                                                                class_place.setVisibility(View.INVISIBLE);
+                                                                course_name.setVisibility(View.INVISIBLE);
+                                                                check_btn_text.setVisibility(View.INVISIBLE);
+                                                                time.setVisibility(View.INVISIBLE);
+                                                                teacher_name.setText(finalResult.get("result").toString());
                                                             } catch (JSONException e) {
                                                                 e.printStackTrace();
                                                             }

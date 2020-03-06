@@ -64,22 +64,19 @@
             app:layout_constraintTop_toBottomOf="@+id/home_banner_title">
 
             <TextView
-                android:id="@+id/class_place"
+                android:id="@+id/class_placet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="136dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textFontWeight="400"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/comment_time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/comment_time"
-                app:layout_constraintTop_toTopOf="@+id/comment_time"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/course_name"
+                android:id="@+id/course_namet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
@@ -88,26 +85,23 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/check_btn"
-                app:layout_constraintEnd_toStartOf="@+id/comment_time"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/class_placet"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/comment_time"
+                android:id="@+id/comment_timet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textFontWeight="400"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/class_place"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/course_name"
+                app:layout_constraintEnd_toStartOf="@+id/course_namet"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/course_name" />
 
             <com.xuexiang.xui.widget.button.RippleView
-                android:id="@+id/check_btn"
+                android:id="@+id/check_btn2"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -119,7 +113,7 @@
                 app:rv_type="doubleRipple">
 
                 <TextView
-                    android:id="@+id/check_btn_text"
+                    android:id="@+id/check_btn_textt"
                     android:layout_width="140dp"
                     android:layout_height="70dp"
                     android:layout_gravity="center"

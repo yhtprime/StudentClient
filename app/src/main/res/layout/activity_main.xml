@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6F3FB"
+    android:background="#ffffff"
     tools:context=".Activity.MainActivity">
 
     <com.dryht.mobile.Util.NoScrollViewPager
@@ -21,7 +21,7 @@
     <FrameLayout
         android:id="@+id/Nav_btn"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

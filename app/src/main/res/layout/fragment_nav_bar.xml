@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:orientation="horizontal"
+    android:layout_height="50dp"
     android:layout_gravity="center"
+    android:background="@color/white"
     android:columnCount="4"
-    android:rowCount="1"
-    android:layout_height="60dp" >
+    android:orientation="horizontal"
+    android:rowCount="1">
 
     <LinearLayout
         android:id="@+id/Linearhome"
@@ -30,10 +30,11 @@
             android:gravity="center"
             android:text="首頁"
             android:textFontWeight="500"
-            android:textSize="15sp">
+            android:textSize="12sp">
 
         </TextView>
-        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/Linearclasses"
         android:layout_width="0dp"
@@ -57,10 +58,11 @@
             android:gravity="center"
             android:text="課程表"
             android:textFontWeight="500"
-            android:textSize="15sp">
+            android:textSize="12sp">
 
         </TextView>
-        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/Linearfriend"
         android:layout_width="0dp"
@@ -84,10 +86,11 @@
             android:gravity="center"
             android:text="朋友圈"
             android:textFontWeight="500"
-            android:textSize="15sp">
+            android:textSize="12sp">
 
         </TextView>
-        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/Linearnotice"
         android:layout_width="0dp"
@@ -112,10 +115,10 @@
             android:gravity="center"
             android:text="通知"
             android:textFontWeight="500"
-            android:textSize="15sp">
+            android:textSize="12sp">
 
         </TextView>
-        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
 

@@ -23,13 +23,20 @@ import com.dryht.mobile.Activity.ClassInfoActivity;
 import com.dryht.mobile.Activity.FdActivity;
 
 import com.dryht.mobile.Activity.MainActivity;
+import com.dryht.mobile.Activity.NoticeInfoActivity;
 import com.dryht.mobile.Activity.TabNewActivity;
+import com.dryht.mobile.Adapter.RecycleViewCheckInfoAdapter;
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 
 import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.recycler.BannerLayout;
 import com.xuexiang.xui.widget.button.RippleView;
@@ -39,7 +46,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -82,10 +91,9 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initComponent() {
-        class_place = view.findViewById(R.id.class_place);
-        time = view.findViewById(R.id.comment_time);
-        course_name = view.findViewById(R.id.course_name);
-        teacher_name = view.findViewById(R.id.teacher_name);
+        class_place = view.findViewById(R.id.class_placet);
+        time = view.findViewById(R.id.comment_timet);
+        course_name = view.findViewById(R.id.course_namet);
         temp = view.findViewById(R.id.temp);
         intro = view.findViewById(R.id.comment_intro);
         pm = view.findViewById(R.id.pm);
@@ -95,9 +103,9 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
         bannerLayout = view.findViewById(R.id.home_banner);
         weather = view.findViewById(R.id.weather);
         banner_title = view.findViewById(R.id.home_banner_title);
-        checkbtn = view.findViewById(R.id.check_btn);
+        checkbtn = view.findViewById(R.id.check_btn2);
         check_btn1 = view.findViewById(R.id.check_btn1);
-        check_btn_text = view.findViewById(R.id.check_btn_text);
+        check_btn_text = view.findViewById(R.id.check_btn_textt);
         constraintLayout = view.findViewById(R.id.check_layout);
     }
 
@@ -231,13 +239,49 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
                                         result = new JSONObject(response.body().string());
                                         //没有开启考勤
                                         if(result.get("status").equals("0")) {
-                                            final JSONObject finalResult = result;
                                             mHandler.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    checkbtn.setEnabled(false);
+                                                    checkbtn.setEnabled(true);
                                                     check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_green_400));
                                                     check_btn_text.setText("您可以开启考勤");
+                                                    checkbtn.setOnClickListener((v -> {
+                                                        OkHttpClient mOkHttpClient=new OkHttpClient();
+                                                        FormBody mFormBody= null;
+                                                        Request mRequest = null;
+                                                        try {
+                                                            mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("classid",finalResult.get("classid").toString() ).build();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                        mRequest=new Request.Builder().url(Utils.generalUrl+"startCheck/").post(mFormBody).build();
+                                                        mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+                                                            @Override
+                                                            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                                                                //String转JSONObject
+                                                                JSONObject result = null;
+                                                                try {
+                                                                    result = new JSONObject(response.body().string());
+                                                                    //取数据
+                                                                    if(result.get("status").equals("1"))
+                                                                    {
+                                                                        mHandler.postDelayed(new Runnable() {
+                                                                            @Override
+                                                                            public void run() {
+
+                                                                            }
+                                                                        }, 0);
+                                                                    }
+                                                                } catch (JSONException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                            }
+                                                            @Override
+                                                            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                                                                XToastUtils.toast("获取课程表失败");
+                                                            }
+                                                        });
+                                                    }));
                                                 }
                                             }, 0);
                                         }

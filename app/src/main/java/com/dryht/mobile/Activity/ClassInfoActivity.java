@@ -211,14 +211,12 @@ public class ClassInfoActivity extends AppCompatActivity {
                                         finalResult.get("weekday").toString(),
                                         XUICommonListItemView.HORIZONTAL,
                                         XUICommonListItemView.ACCESSORY_TYPE_NONE);
-                                weekday.setOrientation(XUICommonListItemView.VERTICAL);
                                 XUICommonListItemView week = mGroupListView.createItemView(
                                         ContextCompat.getDrawable(ClassInfoActivity.this, R.mipmap.ic_launcher),
                                         "周数",
                                         finalResult.get("week").toString(),
                                         XUICommonListItemView.HORIZONTAL,
                                         XUICommonListItemView.ACCESSORY_TYPE_NONE);
-                                weekday.setOrientation(XUICommonListItemView.VERTICAL);
                                 View.OnClickListener onClickListener = new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
