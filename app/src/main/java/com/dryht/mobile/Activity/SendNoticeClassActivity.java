@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.ButtonView;
 import com.xuexiang.xui.widget.edittext.ClearEditText;
@@ -49,6 +50,9 @@ public class SendNoticeClassActivity extends AppCompatActivity {
         setContentView(R.layout.activity_send_notice_class);
         titleBar = findViewById(R.id.notice_class_titlebar);
         title = findViewById(R.id.notice_class_title);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
         intro = findViewById(R.id.notice_class_intro);
         send = findViewById(R.id.notice_class_send);

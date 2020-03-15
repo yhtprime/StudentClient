@@ -57,7 +57,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+/*
+朋友圈主页
+ */
 public class FriendFragment extends Fragment {
     View view;
     private ViewPager viewPager;
@@ -123,7 +125,7 @@ public class FriendFragment extends Fragment {
 
         }
     }
-
+    //获取个人信息
     private void getPersonProfile(){
         OkHttpClient mOkHttpClient=new OkHttpClient();
         FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).build();

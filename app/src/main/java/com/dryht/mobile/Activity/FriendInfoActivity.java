@@ -23,6 +23,7 @@ import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.imageview.RadiusImageView;
 
@@ -38,7 +39,9 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+朋友圈详情
+ */
 public class FriendInfoActivity extends AppCompatActivity {
     private TitleBar titleBar;
     private RadiusImageView friendinfo_pic;
@@ -56,6 +59,9 @@ public class FriendInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friend_info);
         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
         circleid =  getIntent().getStringExtra("circleid");
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         mHandler = new Handler();
         initcompent();
         initTitleBar();
@@ -84,8 +90,6 @@ public class FriendInfoActivity extends AppCompatActivity {
                                 //取数据
                                 if(result.get("status").equals("1"))
                                 {
-                                    //挂起
-                                    JSONObject finalResult = result;
                                     mHandler.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {
@@ -136,7 +140,6 @@ public class FriendInfoActivity extends AppCompatActivity {
                                     friendinfo_title.setText(jsonObject.get("cname").toString());
                                     friendinfo_time.setText(jsonObject.get("time").toString());
                                     friendinfo_intro.setText(jsonObject.get("intro").toString());
-                                    System.out.println(jsonObject.get("pic1"));
                                     if (jsonObject.get("pic1")!=null)
                                     {
                                         Picasso.with(FriendInfoActivity.this).load(jsonObject.get("pic1").toString()).into(pic1);
@@ -212,6 +215,7 @@ public class FriendInfoActivity extends AppCompatActivity {
         pic3 = findViewById(R.id.pic3);
     }
     private void initTitleBar() {
+        titleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         titleBar.setLeftClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

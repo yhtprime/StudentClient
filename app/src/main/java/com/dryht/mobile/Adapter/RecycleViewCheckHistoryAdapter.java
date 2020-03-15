@@ -14,20 +14,23 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dryht.mobile.Activity.CheckInfoActivity;
+import com.dryht.mobile.Bean.Check;
 import com.dryht.mobile.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.List;
+
 public class RecycleViewCheckHistoryAdapter extends RecyclerView.Adapter<RecycleViewCheckHistoryAdapter.Holder> {
 
     private LayoutInflater mInflater;
     private Context mContext;
-    private JSONArray mData;
+    private List<Check> mData;
     private int mLayoutId;
 
-    public RecycleViewCheckHistoryAdapter(Context context, JSONArray data, int layoutId) {
+    public RecycleViewCheckHistoryAdapter(Context context, List<Check> data, int layoutId) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mData = data;
@@ -42,10 +45,9 @@ public class RecycleViewCheckHistoryAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(@NonNull RecycleViewCheckHistoryAdapter.Holder holder, int position) {
-        try {
-            holder.history_name.setText(this.mData.getJSONObject(position).get("name").toString());
-            holder.history_time.setText(this.mData.getJSONObject(position).get("time").toString());
-            if (this.mData.getJSONObject(position).get("status").toString().equals("1"))
+            holder.history_name.setText(this.mData.get(position).getName().toString());
+            holder.history_time.setText(this.mData.get(position).getTime().toString());
+            if (this.mData.get(position).getStatus()==1)
             {
                 holder.history_status.setText("考勤中");
                 holder.history_status.setTextColor(mContext.getColor(R.color.md_green_300));
@@ -58,19 +60,14 @@ public class RecycleViewCheckHistoryAdapter extends RecyclerView.Adapter<Recycle
             holder.CardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
                         Intent intent = new Intent(mContext, CheckInfoActivity.class);
-                        intent.putExtra("checkid",mData.getJSONObject(position).get("checkid").toString());
-                        intent.putExtra("classid",mData.getJSONObject(position).get("classid").toString());
+                        intent.putExtra("checkid",String.valueOf(mData.get(position).getCheckid()));
+                        intent.putExtra("classid",String.valueOf(mData.get(position).getClassid()));
                         mContext.startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
                 }
             });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
     }
 
 
@@ -78,7 +75,7 @@ public class RecycleViewCheckHistoryAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public int getItemCount() {
-        return mData.length();
+        return mData.size();
     }
 
     class Holder extends RecyclerView.ViewHolder {

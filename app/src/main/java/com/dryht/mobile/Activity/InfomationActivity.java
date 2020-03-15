@@ -1,65 +1,51 @@
 package com.dryht.mobile.Activity;
-
+/*
+个人信息页面
+ */
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dryht.mobile.Adapter.FriendAdapter;
-import com.dryht.mobile.Fragment.FriendFragment;
 import com.dryht.mobile.Fragment.FriendListFragment;
-import com.dryht.mobile.Fragment.NavBarFragment;
 import com.dryht.mobile.R;
-import com.dryht.mobile.Util.Lesson;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
-import com.google.android.material.tabs.TabLayout;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.utils.StatusBarUtils;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.devmeteor.tableview.TableView;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
+/*
+个人主页
+ */
 public class InfomationActivity extends AppCompatActivity {
     private RefreshLayout refreshLayout;
     private SharedPreferences sharedPreferences;
@@ -81,6 +67,9 @@ public class InfomationActivity extends AppCompatActivity {
         percourse = findViewById(R.id.percourse);
         per_background = findViewById(R.id.per_background);
         personintro = findViewById(R.id.personintro);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         per_back = findViewById(R.id.per_back);
         per_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +175,7 @@ public class InfomationActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                XToastUtils.toast("获取课程表失败");
+                XToastUtils.toast("获取朋友信息失败");
             }
         });
     }
@@ -250,7 +239,7 @@ public class InfomationActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                XToastUtils.toast("获取课程表失败");
+                XToastUtils.toast("获取个人信息失败");
             }
         });
     }
@@ -296,7 +285,7 @@ public class InfomationActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                        XToastUtils.toast("获取课程表失败");
+                        XToastUtils.toast("关注失败");
                     }
 
                 });

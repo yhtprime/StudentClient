@@ -12,10 +12,13 @@ import android.widget.EditText;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.TokenUtils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.ButtonView;
 import com.xuexiang.xui.widget.dialog.DialogLoader;
-
+/*
+找回密码
+ */
 public class ChangePwdActivity extends AppCompatActivity {
 
     private TitleBar titleBar;
@@ -31,6 +34,9 @@ public class ChangePwdActivity extends AppCompatActivity {
         change_pwd = findViewById(R.id.change_pwd);
         change_pwd1 = findViewById(R.id.change_pwd1);
         changepwd_btn = findViewById(R.id.changepwd_btn);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         changepwd_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

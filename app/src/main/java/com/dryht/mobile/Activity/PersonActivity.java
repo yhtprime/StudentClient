@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.dryht.mobile.R;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.textview.supertextview.SuperTextView;
 
@@ -22,6 +23,9 @@ private Intent intent = null;
         changeinfo = findViewById(R.id.changeinfo);
         showlike = findViewById(R.id.showlike);
         changepasswd = findViewById(R.id.changepasswd);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         changeinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

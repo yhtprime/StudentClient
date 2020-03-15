@@ -1,20 +1,33 @@
 package com.dryht.mobile.Fragment;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -26,6 +39,7 @@ import com.dryht.mobile.Activity.TabNewActivity;
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 
 import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
+import com.dryht.mobile.Bean.local;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
@@ -39,12 +53,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
+import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 public class HomeSFragment extends Fragment implements View.OnClickListener {
     private View view;
@@ -69,7 +87,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     private ConstraintLayout constraintLayout;
     private TextView moreviews;
     private ImageView weather;
-
+    private local location;
     public HomeSFragment() {
         // Required empty public constructor
     }
@@ -210,6 +228,9 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                             @Override
                             public void run() {
                                 try {
+                                    System.out.println("**************************");
+                                    System.out.println(finalResult);
+                                    System.out.println("**************************");
                                     class_place.setText(finalResult.getString("place"));
                                     course_name.setText(finalResult.getString("name"));
                                     teacher_name.setText(finalResult.getString("tname"));
@@ -241,19 +262,19 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                                         @Override
                                                         public void run() {
                                                             checkbtn.setEnabled(false);
-                                                            try {
+//                                                            try {
                                                                 check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
-                                                                class_place.setText("");
-                                                                course_name.setText("");
-                                                                time.setText("");
-                                                                class_place.setVisibility(View.INVISIBLE);
-                                                                course_name.setVisibility(View.INVISIBLE);
-                                                                check_btn_text.setVisibility(View.INVISIBLE);
-                                                                time.setVisibility(View.INVISIBLE);
-                                                                teacher_name.setText(finalResult.get("result").toString());
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
+//                                                                class_place.setText("");
+//                                                                course_name.setText("");
+//                                                                time.setText("");
+//                                                                class_place.setVisibility(View.INVISIBLE);
+//                                                                course_name.setVisibility(View.INVISIBLE);
+//                                                                check_btn_text.setVisibility(View.INVISIBLE);
+//                                                                time.setVisibility(View.INVISIBLE);
+//                                                                teacher_name.setText(finalResult.get("result").toString());
+//                                                            } catch (JSONException e) {
+//                                                                e.printStackTrace();
+//                                                            }
                                                         }
                                                     }, 0);
                                                 }
@@ -287,19 +308,28 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                                                 checkbtn.setOnClickListener(new View.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(View v) {
-                                                                        //创建Intent对象
-                                                                        Intent intent=new Intent();
-                                                                        //将参数放入intent
-                                                                        intent.putExtra("flag", 1);
-                                                                        try {
-                                                                            intent.putExtra("classid",finalResult.getString("classid"));
-                                                                        } catch (JSONException e) {
-                                                                            e.printStackTrace();
+                                                                        getlocal();
+                                                                        if(location.getLongitude()>121.541148&&location.getLongitude()<121.54556&&location.getLatitude()>38.894071&&location.getLatitude()<38.899271)
+                                                                        {
+                                                                            XToastUtils.error("您的未到达教室");
                                                                         }
-                                                                        //跳转到指定的Activity
-                                                                        intent.setClass(getContext(), FdActivity.class);
-                                                                        //启动Activity
-                                                                        startActivity(intent);
+                                                                        else
+                                                                        {
+                                                                            //创建Intent对象
+                                                                            Intent intent=new Intent();
+                                                                            //将参数放入intent
+                                                                            intent.putExtra("flag", 1);
+                                                                            try {
+                                                                                intent.putExtra("classid",finalResult.getString("classid"));
+                                                                            } catch (JSONException e) {
+                                                                                e.printStackTrace();
+                                                                            }
+                                                                            //跳转到指定的Activity
+                                                                            intent.setClass(getContext(), FdActivity.class);
+                                                                            //启动Activity
+                                                                            startActivity(intent);
+                                                                        }
+
                                                                     }
                                                                 });
                                                             } catch (JSONException e) {
@@ -357,7 +387,7 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
 
         mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
             @Override
-            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 Looper.prepare();
                 //String转JSONObject
                 JSONObject result = null;
@@ -440,9 +470,6 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                     if(result.get("status").equals("1"))
                     {
                         result = new JSONObject(result.get("data").toString());
-                        System.out.println("***************************");
-                        System.out.println(result);
-                        System.out.println("***************************");
                         //挂起
                         final JSONObject finalResult = result;
                         mHandler.postDelayed(new Runnable() {
@@ -516,6 +543,13 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     //获取上课考勤情况
     private void getCheckState(){
 
+    }
+
+    //获取地理信息
+    private void getlocal(){
+        LocationManager lm = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+        @SuppressLint("MissingPermission") Location locate = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        location = new local(locate.getLongitude(),locate.getLatitude());
     }
 
 

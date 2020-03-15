@@ -1,8 +1,8 @@
-package com.dryht.mobile.Util;
+package com.dryht.mobile.Bean;
 
 public class Lesson extends cn.devmeteor.tableview.Lesson {
 
-    private String term;
+    private int classid;
     private String week;
     private String name;
     private String weekday;
@@ -11,12 +11,12 @@ public class Lesson extends cn.devmeteor.tableview.Lesson {
     private String place;
     private String teacher;
 
-    public String getTerm() {
-        return term;
+    public int getClassid() {
+        return classid;
     }
 
-    public String getWeek() {
-        return week;
+    public void setClassid(int classid) {
+        this.classid = classid;
     }
 
     public String getName() {
@@ -43,9 +43,9 @@ public class Lesson extends cn.devmeteor.tableview.Lesson {
     }
 
 
-    public Lesson(String term, String week, String name, String weekday, int start, int end, String place,String teacher) {
-        super(term,week,name,weekday,start,end,place);
-        this.term = term;
+    public Lesson(String classid, String week, String name, String weekday, int start, int end, String place,String teacher) {
+        super(classid,week,name,weekday,start,end,place);
+        this.classid = Integer.parseInt(classid);
         this.week = week;
         this.name = name;
         this.weekday = weekday;

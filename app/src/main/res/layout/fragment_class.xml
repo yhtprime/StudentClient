@@ -20,7 +20,7 @@
 
     <cn.devmeteor.tableview.TableView
         android:id="@+id/main_table"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#1F8F8F8F"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,8 +31,7 @@
         app:layout_constraintVertical_bias="0.0"
         app:tv_count_per_day="10"
         app:tv_indicator_bg_color="#4DFFFFFF"
-        app:tv_week_bg_color="#4DFFFFFF" >
-    </cn.devmeteor.tableview.TableView>
+        app:tv_week_bg_color="#4DFFFFFF"></cn.devmeteor.tableview.TableView>
 
     <ListView
         android:id="@+id/search_classList"

@@ -13,9 +13,11 @@ import android.view.View;
 
 import com.dryht.mobile.Adapter.RecycleViewCheckHistoryAdapter;
 import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
+import com.dryht.mobile.Bean.Check;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,18 +26,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+考勤记录
+ */
 public class CheckHistoryActivity extends AppCompatActivity {
     private TitleBar mTitleBar;
     private Handler mHandler;
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
+    private List<Check> checks = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +52,9 @@ public class CheckHistoryActivity extends AppCompatActivity {
         mTitleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         recyclerView = findViewById(R.id.checkhistory_recycleview);
         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         mHandler = new Handler();
         initTitleBar();
         getCheckHistory();
@@ -72,8 +83,16 @@ public class CheckHistoryActivity extends AppCompatActivity {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-
-                                RecycleViewCheckHistoryAdapter r = new RecycleViewCheckHistoryAdapter(CheckHistoryActivity.this,finalResult,R.layout.adapter_recycle_view_checkhistory_item);
+                                for (int i = 0; i < finalResult.length(); i++) {
+                                    try {
+                                        Check c = new Check(finalResult.getJSONObject(i).getInt("checkid"), Timestamp.valueOf(finalResult.getJSONObject(i).getString("time")),finalResult.getJSONObject(i).getString("name")
+                                        ,finalResult.getJSONObject(i).getInt("teacherid"),finalResult.getJSONObject(i).getInt("classid"),finalResult.getJSONObject(i).getInt("status"));
+                                        checks.add(c);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                RecycleViewCheckHistoryAdapter r = new RecycleViewCheckHistoryAdapter(CheckHistoryActivity.this,checks,R.layout.adapter_recycle_view_checkhistory_item);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(CheckHistoryActivity.this));
                                 recyclerView.setAdapter(r);
                             }

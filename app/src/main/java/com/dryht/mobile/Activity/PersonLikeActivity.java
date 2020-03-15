@@ -16,6 +16,7 @@ import com.dryht.mobile.Adapter.RecycleViewLikeAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +43,9 @@ public class PersonLikeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_person_like);
         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
         mHandler = new Handler();
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         titleBar = findViewById(R.id.person_likebar);
         titleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         titleBar.setLeftClickListener(new View.OnClickListener() {

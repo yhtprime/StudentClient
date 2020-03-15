@@ -3,110 +3,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.xuexiang.xui.widget.actionbar.TitleBar
+        android:id="@+id/noticeinfotitle"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="1dp"
+        app:layout_collapseMode="pin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tb_actionPadding="20dp"
+        app:tb_barHeight="45dp"
+        app:tb_leftImageResource="@drawable/back"
+        app:tb_sideTextPadding="20dp"
+        app:tb_subTitleText=""
+        app:tb_titleText="通知详情" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.xuexiang.xui.widget.actionbar.TitleBar
-            android:id="@+id/noticeinfotitle"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="1dp"
-            app:layout_collapseMode="pin"
-            app:layout_constraintBottom_toTopOf="@+id/newintro"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tb_actionPadding="20dp"
-            app:tb_barHeight="45dp"
-            app:tb_dividerColor="@color/xui_config_color_blue"
-            app:tb_leftImageResource="@drawable/back"
-            app:tb_leftText="返回"
-            app:tb_sideTextPadding="20dp"
-            app:tb_subTitleText=""
-            app:tb_titleText="通知详情" />
+        app:layout_constraintTop_toBottomOf="@+id/noticeinfotitle">
 
         <LinearLayout
-            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/notice_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/bg_black"
-                android:textFontWeight="500"
-                android:textSize="20sp">
-            </TextView>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+           >
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/notice_teacher"
-                    android:layout_width="0dp"
+                    android:id="@+id/notice_title"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="娱乐"
-                    android:textColor="@color/md_blue_400"
-                    android:textFontWeight="500"></TextView>
+                    android:textColor="@color/bg_black"
+                    android:textFontWeight="500"
+                    android:textSize="20sp"></TextView>
 
-                <TextView
-                    android:id="@+id/notice_time"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:text="2019：15464321"
-                    android:textColor="@color/text_gray"></TextView>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/notice_teacher"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="娱乐"
+                        android:textColor="@color/md_blue_400"
+                        android:textFontWeight="500"></TextView>
+
+                    <TextView
+                        android:id="@+id/notice_time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:text="2019：15464321"
+                        android:textColor="@color/text_gray"></TextView>
+                </LinearLayout>
+
             </LinearLayout>
 
+
+            <TextView
+                android:id="@+id/noticeintro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:inputType="textNoSuggestions"
+                android:padding="2dp"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/classinfotitle"></TextView>
+
+            <Button
+                android:id="@+id/notice_check_btn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:layout_marginTop="50dp"
+                android:text="确认消息"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/password" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/noticeChart"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/noticeinfo_recycle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/noticeintro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textNoSuggestions"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/classinfotitle"></TextView>
-
-        <Button
-            android:id="@+id/notice_check_btn"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="50dp"
-            android:text="确认消息"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/noticeChart"
-            android:layout_width="match_parent"
-            android:layout_height="250dp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/noticeinfo_recycle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -70,4 +70,9 @@
         <item name="riv_is_circle">true</item>
         <item name="riv_border_width">0dp</item>
     </style>
+    <!-- Base application theme. -->
+    <style name="SplashActivityTheme" parent="android:Theme.Holo.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
 </resources>

@@ -3,29 +3,20 @@ package com.dryht.mobile.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
 import com.dryht.mobile.Activity.ClassInfoActivity;
-import com.dryht.mobile.Activity.LoginActivity;
-import com.dryht.mobile.Activity.MainActivity;
 import com.dryht.mobile.Adapter.ListViewSearchClassAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
@@ -42,13 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.dryht.mobile.Util.Lesson;
-import com.google.android.material.snackbar.Snackbar;
-import com.xuexiang.xui.utils.SnackbarUtils;
-import com.xuexiang.xui.widget.actionbar.TitleBar;
-import com.xuexiang.xui.widget.actionbar.TitleUtils;
-import com.xuexiang.xui.widget.searchview.MaterialSearchView;
-import com.xuexiang.xui.widget.toast.XToast;
+import com.dryht.mobile.Bean.Lesson;
 
 import cn.devmeteor.tableview.LessonView;
 import cn.devmeteor.tableview.TableView;
@@ -56,7 +41,6 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @GlideModule
@@ -89,7 +73,7 @@ public class ClassFragment extends Fragment {
         listView = view.findViewById(R.id.search_classList);
         mHandler = new Handler();
         initSearchView();
-        if(sharedPreferences.getString("lessons",null)==null)
+        if(sharedPreferences.getString("alllesson",null)==null)
             getLessons();
         else
         {

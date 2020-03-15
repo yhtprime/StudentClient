@@ -13,20 +13,24 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dryht.mobile.Activity.CheckInfoActivity;
+import com.dryht.mobile.Bean.CheckHistory;
+import com.dryht.mobile.Bean.Student;
 import com.dryht.mobile.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.List;
+
 public class RecycleViewCheckInfoAdapter extends RecyclerView.Adapter<RecycleViewCheckInfoAdapter.Holder> {
 
     private LayoutInflater mInflater;
     private Context mContext;
-    private JSONArray mData;
+    private List<Student> mData;
     private int mLayoutId;
 
-    public RecycleViewCheckInfoAdapter(Context context, JSONArray data, int layoutId) {
+    public RecycleViewCheckInfoAdapter(Context context, List<Student> data, int layoutId) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mData = data;
@@ -41,35 +45,18 @@ public class RecycleViewCheckInfoAdapter extends RecyclerView.Adapter<RecycleVie
 
     @Override
     public void onBindViewHolder(@NonNull RecycleViewCheckInfoAdapter.Holder holder, int position) {
-        try {
-            holder.checkinfo_name.setText(this.mData.getJSONObject(position).get("name").toString());
-            if (this.mData.getJSONObject(position).get("status").toString().equals("1"))
-            {
-                holder.checkinfo_status.setText("已考勤");
-                holder.checkinfo_status.setTextColor(mContext.getResources().getColor(R.color.md_green_300));
-            }
-            else
-            {
-                holder.checkinfo_status.setText("未考勤");
-                holder.checkinfo_status.setTextColor(mContext.getResources().getColor(R.color.md_red_300));
-            }
-            Picasso.with(mContext).load(this.mData.getJSONObject(position).get("headpic").toString()).into(holder.checkinfo_pic);
-            holder.CardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent intent = new Intent(mContext, CheckInfoActivity.class);
-                        intent.putExtra("checkid",mData.getJSONObject(position).get("checkid").toString());
-                        intent.putExtra("classid",mData.getJSONObject(position).get("classid").toString());
-                        mContext.startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
+        holder.checkinfo_name.setText(this.mData.get(position).getName());
+        if (this.mData.get(position).getStatus()==1)
+        {
+            holder.checkinfo_status.setText("已考勤");
+            holder.checkinfo_status.setTextColor(mContext.getResources().getColor(R.color.md_green_300));
         }
+        else
+        {
+            holder.checkinfo_status.setText("未考勤");
+            holder.checkinfo_status.setTextColor(mContext.getResources().getColor(R.color.md_red_300));
+        }
+        Picasso.with(mContext).load(this.mData.get(position).getHeadpic()).into(holder.checkinfo_pic);
     }
 
 
@@ -77,7 +64,7 @@ public class RecycleViewCheckInfoAdapter extends RecyclerView.Adapter<RecycleVie
 
     @Override
     public int getItemCount() {
-        return mData.length();
+        return mData.size();
     }
 
     class Holder extends RecyclerView.ViewHolder {

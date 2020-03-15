@@ -268,7 +268,9 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
                                                                         mHandler.postDelayed(new Runnable() {
                                                                             @Override
                                                                             public void run() {
-
+                                                                                checkbtn.setEnabled(false);
+                                                                                check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
+                                                                                check_btn_text.setText("您已经开启了考勤");
                                                                             }
                                                                         }, 0);
                                                                     }

@@ -24,6 +24,7 @@ import com.dryht.mobile.Util.OnRecyclerItemClickListener;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.squareup.picasso.Picasso;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 
 import net.nightwhistler.htmlspanner.HtmlSpanner;
@@ -63,6 +64,9 @@ public class NewInfoActivity extends AppCompatActivity {
         new_time= findViewById(R.id.new_time);
         mTitleBar = findViewById(R.id.newinfotitle);
         mTitleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         mHandler = new Handler();
         initTitleBar();
         getinformation();

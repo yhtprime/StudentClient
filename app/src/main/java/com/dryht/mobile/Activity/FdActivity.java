@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 
 import com.dryht.mobile.R;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -145,6 +146,9 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         classid =  getIntent().getStringExtra("classid");
         passwd = getIntent().getStringExtra("passwd");
         account = getIntent().getStringExtra("account");
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         if(limit>1)
             baseUrl = "recordfacedata/";
         else
@@ -206,7 +210,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
      */
     protected void initOpencv() {
         initFrontalFace();
-        initProfileFace();
+        //initProfileFace();
         // 显示
         openCvCameraView.enableView();
     }
@@ -216,7 +220,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
      */
     public void initFrontalFace() {
         try {
-            //这个模型是我觉得来说相对不错的
             InputStream is = getResources().openRawResource(R.raw.haarcascade_frontalface_alt); //OpenCV的人脸模型文件： lbpcascade_frontalface_improved
             File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
             File mCascadeFile = new File(cascadeDir, "haarcascade_frontalface_alt.xml");
@@ -240,7 +243,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
      */
     public void initProfileFace() {
         try {
-            //这个模型是我觉得来说相对不错的
             InputStream is = getResources().openRawResource(R.raw.haarcascade_profileface); //OpenCV的人脸模型文件： lbpcascade_frontalface_improved
             File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
             File mCascadeFile = new File(cascadeDir, "haarcascade_profileface.xml");
@@ -283,37 +285,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
      */
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
-//        mRgba = inputFrame.rgba(); //RGBA
-//        mGray = inputFrame.gray(); //单通道灰度图
-//        //解决  前置摄像头旋转显示问题
-//        Core.flip(mRgba, mRgba, 1); //旋转,变成镜像
-//
-//        mMilliCurrentTime = System.currentTimeMillis() / 100;//获取当前时间毫秒级别
-//        mCurrentTime = mMilliCurrentTime / 10;//获取当前时间，秒级别
-//
-//        //每0.5秒检查一次，如果你一直开测，不做这个过滤，那么大概一秒可能是起码5次计算检测是否有人脸，这样的计算对于机器有一定的压力，
-//        //而且这些计算起始可以不用那么多的，我个人觉得合适的是，
-//        //没有检测到人的时候，1秒2次检测
-//        //检测到人的时候，修改为1秒1次检测，这样你开一天甚至几天也不会出现过热导致app退出
-//        if (mRecodeFreeTime + 5 <= mMilliCurrentTime) {
-//            mRecodeFreeTime = mMilliCurrentTime;
-//            if (mRecodeTime == 0 || mCurrentFaceSize == 0 || mRecodeTime < mCurrentTime) {//识别到人之后，1秒做一次检测
-//                mRecodeTime = mCurrentTime;//记录当前时间
-//                //检测并显示
-//                MatOfRect frontalFaces = new MatOfRect();
-//
-//                if (mFrontalFaceClassifier != null) {//这里2个 Size 是用于检测人脸的，越小，检测距离越远，1.1, 5, 2, m65Size, mDefault着四个参数可以提高检测的准确率，5表示确认五次，具体百度 detectMultiScale 这个方法
-//                    mFrontalFaceClassifier.detectMultiScale(mGray, frontalFaces, 1.1, 5, 2, m65Size, mDefault);
-//                    mFrontalFacesArray = frontalFaces.toArray();
-//                    if (mFrontalFacesArray.length > 0) {
-//                        Log.i(TAG, "正脸人数为 : " + mFrontalFacesArray.length);
-//                    }
-//                    mCurrentFaceSize = mFrontFaces = mFrontalFacesArray.length;
-//                }
-//            }
-                   /* Bitmap bitmap = Bitmap.createBitmap(mRgba.width(), mRgba.height(), Bitmap.Config.RGB_565);
-                    Utils.matToBitmap(mRgba, bitmap);
-                    mFaceBitmap = bitmap;*/
         mMilliCurrentTime = System.currentTimeMillis() / 100;//获取当前时间毫秒级别
         mCurrentTime = mMilliCurrentTime / 10;//获取当前时间，秒级别
         int rotation = openCvCameraView.getDisplay().getRotation();

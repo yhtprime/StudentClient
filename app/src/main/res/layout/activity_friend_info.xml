@@ -15,9 +15,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tb_actionPadding="20dp"
         app:tb_barHeight="45dp"
-        app:tb_dividerColor="@color/xui_config_color_blue"
-        app:tb_leftImageResource="@drawable/icon_back_white"
-        app:tb_leftText="返回"
+        app:tb_dividerColor="@color/thiscolor"
+        app:tb_leftImageResource="@drawable/back"
         app:tb_sideTextPadding="20dp"
         app:tb_subTitleText=""
         app:tb_titleText="朋友圈详情" />
@@ -98,7 +97,7 @@
                 android:id="@+id/friendinfo_intro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/xui_config_color_10_pure_black"
+                android:background="@color/white"
                 android:padding="10dp"></TextView>
 
             <androidx.constraintlayout.widget.ConstraintLayout

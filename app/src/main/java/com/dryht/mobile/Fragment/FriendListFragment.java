@@ -1,25 +1,19 @@
 package com.dryht.mobile.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dryht.mobile.Activity.ClassInfoActivity;
 import com.dryht.mobile.Adapter.FriendShareAdapter;
 import com.dryht.mobile.R;
-import com.dryht.mobile.Util.Lesson;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 
@@ -29,15 +23,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import cn.devmeteor.tableview.LessonView;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+显示朋友圈信息
+ */
 public class FriendListFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     View view;
@@ -98,7 +92,7 @@ public class FriendListFragment extends Fragment {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                FriendShareAdapter friendShareAdapter = new FriendShareAdapter(getContext(),jsonArray,R.layout.adapter_recycle_view_friend_item,mHandler);
+                                FriendShareAdapter friendShareAdapter = new FriendShareAdapter(getContext(),jsonArray,R.layout.adapter_recycle_view_friend_item,mHandler,flag);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(friendShareAdapter);
                             }
@@ -110,7 +104,7 @@ public class FriendListFragment extends Fragment {
             }
             @Override
             public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                XToastUtils.toast("获取课程表失败");
+                XToastUtils.toast("获取朋友圈列表失败");
             }
         });
 

@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
+import com.dryht.mobile.R;
 import com.xuexiang.xpage.base.XPageActivity;
 import com.xuexiang.xpage.base.XPageFragment;
 import com.xuexiang.xpage.core.PageOption;
 import com.xuexiang.xpage.enums.CoreAnim;
 
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.utils.WidgetUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.actionbar.TitleUtils;
@@ -81,6 +83,14 @@ public abstract class BaseFragment extends XPageFragment {
             root.removeViewAt(0);
             initTitle();
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(getActivity());
+        getActivity().getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
     }
 
     @Override

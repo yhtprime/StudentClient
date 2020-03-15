@@ -15,6 +15,8 @@ import android.widget.FrameLayout;
 
 import com.dryht.mobile.Adapter.RecycleViewCheckHistoryAdapter;
 import com.dryht.mobile.Adapter.RecycleViewCheckInfoAdapter;
+import com.dryht.mobile.Bean.CheckHistory;
+import com.dryht.mobile.Bean.Student;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
@@ -24,6 +26,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,7 +43,9 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+单个考勤详情
+ */
 public class CheckInfoActivity extends AppCompatActivity {
     private com.github.mikephil.charting.charts.PieChart pieChart;
     private TitleBar mTitleBar;
@@ -48,6 +53,8 @@ public class CheckInfoActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
     private String checkid;
+    private CheckHistory checkHistory;
+    private List<Student> students = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +70,9 @@ public class CheckInfoActivity extends AppCompatActivity {
         });
         recyclerView = findViewById(R.id.checkinfo_recycle);
         sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         checkid = getIntent().getStringExtra("checkid");
         mHandler = new Handler();
         setpieChart();
@@ -85,17 +95,32 @@ public class CheckInfoActivity extends AppCompatActivity {
                 JSONObject result = null;
                 try {
                     result = new JSONObject(response.body().string());
+
                     //取数据
                     if(result.get("status").equals("1"))
                     {
+                        final JSONArray finalResult = new JSONArray(result.get("data").toString());
+                        for (int i = 0; i < finalResult.length(); i++) {
+                            int sid = finalResult.getJSONObject(i).getInt("sid");
+                            String account = finalResult.getJSONObject(i).getString("account");
+                            String name = finalResult.getJSONObject(i).getString("name");
+                            String headpic = finalResult.getJSONObject(i).getString("headpic");
+                            int grade = finalResult.getJSONObject(i).getInt("grade");
+                            int major = finalResult.getJSONObject(i).getInt("major");
+                            int status = finalResult.getJSONObject(i).getInt("status");
+                            String email = finalResult.getJSONObject(i).getString("email");
+                            students.add(new Student(sid,account,null,name,headpic,null,grade,major,email,null,null,status));
+                        }
+                        checkHistory = new CheckHistory(Integer.parseInt(result.getString("good")),Integer.parseInt(result.getString("bad")),students);
                         //挂起
                         Float good = Float.valueOf(result.getString("good"));
                         Float bad = Float.valueOf(result.getString("bad"));
                         Float total = good+bad;
-                        final JSONArray finalResult = new JSONArray(result.get("data").toString());
+
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
+
                                 pieChart.setNoDataText("考勤数据统计");
                                 List<PieEntry> strings = new ArrayList<>();
                                 strings.add(new PieEntry(bad/total*100,"未签"));
@@ -120,7 +145,7 @@ public class CheckInfoActivity extends AppCompatActivity {
                                 pieChart.setDescription(description);
                                 pieChart.setHoleRadius(0f);
                                 pieChart.setTransparentCircleRadius(0f);
-                                RecycleViewCheckInfoAdapter r = new RecycleViewCheckInfoAdapter(CheckInfoActivity.this,finalResult,R.layout.adapter_recycle_view_checkinfo_item);
+                                RecycleViewCheckInfoAdapter r = new RecycleViewCheckInfoAdapter(CheckInfoActivity.this,checkHistory.getStudentList(),R.layout.adapter_recycle_view_checkinfo_item);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(CheckInfoActivity.this));
                                 recyclerView.setAdapter(r);
                             }

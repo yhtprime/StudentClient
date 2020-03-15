@@ -14,7 +14,6 @@
         app:tb_barHeight="55dp"
         app:tb_dividerColor="@color/thiscolor"
         app:tb_leftImageResource="@drawable/back"
-        app:tb_leftText="返回"
         app:tb_sideTextPadding="20dp"
         app:tb_subTitleText=""
         app:tb_titleText="班级详情"

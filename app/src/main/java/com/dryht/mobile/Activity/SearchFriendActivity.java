@@ -15,6 +15,7 @@ import com.dryht.mobile.Adapter.RecycleViewLikeAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,6 +44,9 @@ public class SearchFriendActivity extends AppCompatActivity {
         titleBar = findViewById(R.id.searchf_likebar);
         recyclerView = findViewById(R.id.searchf_recycle);
         searchf_search_view = findViewById(R.id.searchf_search_view);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         titleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         mHandler = new Handler();
         titleBar.setLeftClickListener(new View.OnClickListener() {

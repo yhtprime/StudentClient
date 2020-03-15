@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.dryht.mobile.Activity.FdActivity;
 import com.dryht.mobile.Activity.MainActivity;
 import com.dryht.mobile.Adapter.ImageSelectGridAdapter;
+import com.dryht.mobile.Bean.Circle;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
@@ -49,7 +50,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
+/*
+发布朋友圈
+ */
 @Page
 public class FriendSendFragment extends BaseFragment implements ImageSelectGridAdapter.OnAddPicClickListener {
     View view;
@@ -62,7 +65,7 @@ public class FriendSendFragment extends BaseFragment implements ImageSelectGridA
     private Handler mHandler;
     private List<LocalMedia> mSelectList = new ArrayList<>();
     private SharedPreferences sharedPreferences;
-
+    private Circle circle;
     public FriendSendFragment() {
         // Required empty public constructor
     }
@@ -144,69 +147,73 @@ public class FriendSendFragment extends BaseFragment implements ImageSelectGridA
     private class sendmessage implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            if(sendtitle.getText().toString()==null||sendintro.getEditText().getText()==null)
+            if(sendtitle.getText().toString()==null||sendintro.getEditText().getText()==null||sendintro.getEditText().getText().equals("")||sendtitle.getText().toString().equals(""))
             {
-                Toast.makeText(getContext(),"标题和内容不能为空",Toast.LENGTH_LONG).show();
+                XToastUtils.error("标题和内容不能为空");
             }
-            //获取图片和信息上传
-            OkHttpClient mOkHttpClient=new OkHttpClient();
-            MultipartBody.Builder builder=  new MultipartBody.Builder().setType(MultipartBody.FORM);
-            for (int i = 0;i<mSelectList.size();i++) {
-                RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), new File(String.valueOf(mSelectList.get(i).getPath())));
-                //截取文件名
-                String name =  mSelectList.get(i).getPath().substring(mSelectList.get(i).getPath().lastIndexOf(".")-1);
-                builder.addFormDataPart("img",name,fileBody);
-            }
-            builder.addFormDataPart("auth",sharedPreferences.getString("auth","0"));
-            builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
-            builder.addFormDataPart("name",sendtitle.getText().toString());
-            builder.addFormDataPart("intro",sendintro.getEditText().getText().toString());
-            Request mRequest=new Request.Builder()
-                    .url(com.dryht.mobile.Util.Utils.generalUrl+"sendmessage/")
-                    .post(builder.build())
-                    .build();
+            else {
+                circle = new Circle(sendtitle.getText().toString(),sendintro.getEditText().getText().toString(),null,null,null,null,1);
+                //获取图片和信息上传
+                OkHttpClient mOkHttpClient=new OkHttpClient();
+                MultipartBody.Builder builder=  new MultipartBody.Builder().setType(MultipartBody.FORM);
+                for (int i = 0;i<mSelectList.size();i++) {
+                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), new File(String.valueOf(mSelectList.get(i).getPath())));
+                    //截取文件名
+                    String name =  mSelectList.get(i).getPath().substring(mSelectList.get(i).getPath().lastIndexOf(".")-1);
+                    builder.addFormDataPart("img",name,fileBody);
+                }
+                builder.addFormDataPart("auth",sharedPreferences.getString("auth","0"));
+                builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
+                builder.addFormDataPart("name",circle.getName());
+                builder.addFormDataPart("intro",circle.getIntro());
+                Request mRequest=new Request.Builder()
+                        .url(com.dryht.mobile.Util.Utils.generalUrl+"sendmessage/")
+                        .post(builder.build())
+                        .build();
 
-            mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
-                @Override
-                public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
-                    Looper.prepare();
-                    //String转JSONObject
-                    JSONObject result = null;
-                    try {
-                        result = new JSONObject(response.body().string());
-                        System.out.println(result.get("status"));
-                        //取数据
-                        if(result.get("status").equals("1"))
-                        {
-                            mHandler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    onDestroy();
-                                    getActivity().finish();
-                                }
-                            },0);
+                mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
+                    @Override
+                    public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                        Looper.prepare();
+                        //String转JSONObject
+                        JSONObject result = null;
+                        try {
+                            result = new JSONObject(response.body().string());
+                            System.out.println(result.get("status"));
+                            //取数据
+                            if(result.get("status").equals("1"))
+                            {
+                                mHandler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onDestroy();
+                                        getActivity().finish();
+                                    }
+                                },0);
 
+                            }
+                            else
+                            {
+                                Toast.makeText(getContext(),"失败",Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                        else
-                        {
-                            Toast.makeText(getContext(),"失败",Toast.LENGTH_LONG).show();
-                        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Looper.loop();
+
                     }
 
-                    Looper.loop();
+                    @Override
+                    public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                        Looper.prepare();
+                        Toast.makeText(getContext(),"网络请求失败",Toast.LENGTH_LONG).show();
+                        Looper.loop();
+                    }
+                });
+            }
 
-                }
-
-                @Override
-                public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                    Looper.prepare();
-                    Toast.makeText(getContext(),"网络请求失败",Toast.LENGTH_LONG).show();
-                    Looper.loop();
-                }
-            });
 
         }
     }

@@ -1,23 +1,23 @@
 package com.dryht.mobile.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,15 +30,12 @@ import com.dryht.mobile.Fragment.ClassFragment;
 import com.dryht.mobile.Fragment.FriendFragment;
 import com.dryht.mobile.Fragment.HomeSFragment;
 import com.dryht.mobile.Fragment.HomeTFragment;
-import com.dryht.mobile.Fragment.MeSFragment;
-import com.dryht.mobile.Fragment.MeTFragment;
 import com.dryht.mobile.Fragment.NavBarFragment;
 import com.dryht.mobile.Fragment.NoticeFragment;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.NoScrollViewPager;
 import com.dryht.mobile.Util.TokenUtils;
 import com.squareup.picasso.Picasso;
-import com.xuexiang.xui.XUI;
 import com.xuexiang.xui.utils.ResUtils;
 import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.utils.ThemeUtils;

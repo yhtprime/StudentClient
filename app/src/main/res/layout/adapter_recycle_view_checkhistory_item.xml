@@ -37,10 +37,10 @@
                 <TextView
                     android:id="@+id/history_name"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:text="java"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -52,11 +52,13 @@
                     android:id="@+id/history_status"
                     style="@style/TextStyle.Explain"
                     android:layout_gravity="end|center_vertical"
+                    android:layout_marginStart="8dp"
                     android:text="xuexiangjys"
                     android:textColor="@color/xui_config_color_pure_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/history_name"
                     app:layout_constraintStart_toEndOf="@+id/history_name"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="@+id/history_name" />
 
                 <TextView
                     android:id="@+id/history_time"
@@ -65,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="点赞"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

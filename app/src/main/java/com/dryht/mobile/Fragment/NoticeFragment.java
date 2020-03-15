@@ -1,7 +1,6 @@
 package com.dryht.mobile.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -19,16 +17,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dryht.mobile.Activity.ClassInfoActivity;
 import com.dryht.mobile.Adapter.ListViewSearchClassAdapter;
 import com.dryht.mobile.Adapter.RecycleViewNoticeAdapter;
 import com.dryht.mobile.R;
-import com.dryht.mobile.Util.Lesson;
+import com.dryht.mobile.Bean.Lesson;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.xuexiang.xui.widget.searchview.MaterialSearchView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;

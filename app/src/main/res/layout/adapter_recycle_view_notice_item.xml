@@ -66,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="点赞"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

@@ -5,31 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.CheckHistoryActivity">
-
-    <View
-        android:id="@+id/banner3"
-        android:layout_width="10dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/md_blue_300"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_marginStart="20dp"
-        android:text="考勤记录"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/banner3"
-        app:layout_constraintStart_toStartOf="@+id/banner3"
-        app:layout_constraintTop_toTopOf="@+id/banner3" />
-
     <com.xuexiang.xui.widget.actionbar.TitleBar
         android:id="@+id/checkhistorytitle"
         android:layout_width="match_parent"
@@ -42,26 +17,63 @@
         app:tb_barHeight="55dp"
         app:tb_dividerColor="@color/thiscolor"
         app:tb_leftImageResource="@drawable/back"
-        app:tb_leftText="返回"
         app:tb_sideTextPadding="20dp"
         app:tb_subTitleText=""
         app:tb_titleText="考勤记录" />
 
     <ScrollView
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkhistorytitle">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/checkhistory_recycleview"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <View
+                android:id="@+id/banner3"
+                android:layout_width="10dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@color/md_blue_300"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_marginStart="20dp"
+                android:text="考勤记录"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/banner3"
+                app:layout_constraintStart_toStartOf="@+id/banner3"
+                app:layout_constraintTop_toTopOf="@+id/banner3" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/checkhistory_recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

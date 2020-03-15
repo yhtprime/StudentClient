@@ -8,11 +8,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;;
+import com.dryht.mobile.Bean.Category;
 import com.dryht.mobile.Fragment.TabNewFragent;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.google.android.material.tabs.TabLayout;
+import com.xuexiang.xui.utils.StatusBarUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -20,6 +22,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -31,13 +35,15 @@ public class TabNewActivity extends AppCompatActivity {
     private FragmentManager supportFragmentManager;
     private FragmentTransaction fragmentTransaction;
     private TabLayout tblayout;
-    private SharedPreferences sharedPreferences;
     private Handler mHandler = new Handler();
+    private List<Category> categories = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_new);
-        sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         //获取管理者
         supportFragmentManager = getSupportFragmentManager();
         initcomponent();
@@ -45,7 +51,7 @@ public class TabNewActivity extends AppCompatActivity {
 
     private void initcomponent() {
         tblayout = findViewById(R.id.tb_new);
-
+        //获取所有新闻
         OkHttpClient mOkHttpClient=new OkHttpClient();
         FormBody mFormBody=new FormBody.Builder().build();
         Request mRequest=new Request.Builder()
@@ -63,14 +69,15 @@ public class TabNewActivity extends AppCompatActivity {
                     //取数据
                     if(result.get("status").equals("1"))
                     {
-                        sharedPreferences.edit().putString("newsList", String.valueOf(result.get("data"))).commit();
                         final JSONArray jsonArray = new JSONArray(result.get("data").toString());
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     try {
-                                        tblayout.addTab(tblayout.newTab().setText(jsonArray.getJSONObject(i).get("name").toString()));
+                                        Category c = new Category(jsonArray.getJSONObject(i).getInt("categoryid"),jsonArray.getJSONObject(i).get("name").toString());
+                                        categories.add(c);
+                                        tblayout.addTab(tblayout.newTab().setText(c.getName()));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -90,19 +97,14 @@ public class TabNewActivity extends AppCompatActivity {
         });
         initListener();
     }
+    //开始获取分类下的新闻
     private void initListener() {
         tblayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                JSONArray jsonArray = null;
-                try {
-                    jsonArray = new JSONArray(sharedPreferences.getString("newsList", null));
                     //开启事务
                     fragmentTransaction =  supportFragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.new_fragent, new TabNewFragent(jsonArray.getJSONObject(tab.getPosition()).get("categoryid").toString())).commit();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    fragmentTransaction.replace(R.id.new_fragent, new TabNewFragent(categories.get(tab.getPosition()).getCategoryid())).commit();
 
             }
 

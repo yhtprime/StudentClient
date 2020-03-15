@@ -12,6 +12,7 @@ import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.ButtonView;
 import com.xuexiang.xui.widget.edittext.MultiLineEditText;
@@ -28,7 +29,9 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+修改个人信息
+ */
 public class ChangeInfoActivity extends AppCompatActivity {
 private MultiLineEditText intro;
 private TitleBar titleBar;
@@ -49,6 +52,9 @@ private SharedPreferences sharedPreferences;
                 finish();
             }
         }).setLeftImageDrawable(getResources().getDrawable(R.drawable.back));
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         buttonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,12 +81,6 @@ private SharedPreferences sharedPreferences;
                                 if(result.get("status").equals("1"))
                                 {
                                     XToastUtils.success("信息修改成功");
-    //                                mHandler.postDelayed(new Runnable() {
-    //                                    @Override
-    //                                    public void run() {
-    //
-    //                                    }
-    //                                }, 0);
                                 }
                                 else
                                 {

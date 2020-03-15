@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.dryht.mobile.Adapter.RecycleViewCheckInfoAdapter;
+import com.dryht.mobile.Bean.Student;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
@@ -22,6 +23,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.button.ButtonView;
 
@@ -39,7 +41,9 @@ import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+通知详情页
+ */
 public class NoticeInfoActivity extends AppCompatActivity {
     private TitleBar titleBar;
     private String infoid;
@@ -49,6 +53,8 @@ public class NoticeInfoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Handler mHandler;
     private com.github.mikephil.charting.charts.PieChart pieChart;
+    private List<Student>students = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +62,9 @@ public class NoticeInfoActivity extends AppCompatActivity {
         infoid = getIntent().getStringExtra("infoid");
         sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         recyclerView = findViewById(R.id.noticeinfo_recycle);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         mHandler = new Handler();
         pieChart = findViewById(R.id.noticeChart);
         initcomponent();
@@ -93,6 +102,17 @@ public class NoticeInfoActivity extends AppCompatActivity {
                         //挂起
                         JSONObject finalResult = new JSONObject(result.get("data").toString());
                         JSONArray stu = new JSONArray(result.get("stu").toString());
+                        for (int i = 0; i < stu.length(); i++) {
+                            int sid = stu.getJSONObject(i).getInt("sid");
+                            String account = stu.getJSONObject(i).getString("account");
+                            String name = stu.getJSONObject(i).getString("name");
+                            String headpic = stu.getJSONObject(i).getString("headpic");
+                            int grade = stu.getJSONObject(i).getInt("grade");
+                            int major = stu.getJSONObject(i).getInt("major");
+                            int status = stu.getJSONObject(i).getInt("status");
+                            String email = stu.getJSONObject(i).getString("email");
+                            students.add(new Student(sid,account,null,name,headpic,null,grade,major,email,null,null,status));
+                        }
                         JSONObject finalResult1 = result;
                         mHandler.postDelayed(new Runnable() {
                             @Override
@@ -107,8 +127,8 @@ public class NoticeInfoActivity extends AppCompatActivity {
                                     noticeintro.setText(finalResult.getString("intro"));
                                     pieChart.setNoDataText("考勤数据统计");
                                     List<PieEntry> strings = new ArrayList<>();
-                                    strings.add(new PieEntry(bad/total*100,"未签"));
-                                    strings.add(new PieEntry(good/total*100,"已签"));
+                                    strings.add(new PieEntry(bad/total*100,"未阅读"));
+                                    strings.add(new PieEntry(good/total*100,"已阅读"));
                                     PieDataSet dataSet = new PieDataSet(strings,"");
 
                                     ArrayList<Integer> colors = new ArrayList<Integer>();
@@ -129,7 +149,7 @@ public class NoticeInfoActivity extends AppCompatActivity {
                                     pieChart.setDescription(description);
                                     pieChart.setHoleRadius(0f);
                                     pieChart.setTransparentCircleRadius(0f);
-                                    RecycleViewCheckInfoAdapter r = new RecycleViewCheckInfoAdapter(NoticeInfoActivity.this,stu,R.layout.adapter_recycle_view_checkinfo_item);
+                                    RecycleViewCheckInfoAdapter r = new RecycleViewCheckInfoAdapter(NoticeInfoActivity.this,students,R.layout.adapter_recycle_view_checkinfo_item);
                                     recyclerView.setLayoutManager(new LinearLayoutManager(NoticeInfoActivity.this));
                                     recyclerView.setAdapter(r);
                                 } catch (JSONException e) {

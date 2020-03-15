@@ -72,11 +72,11 @@ public class RecycleViewFriendCommentAdapter extends RecyclerView.Adapter<Recycl
             Picasso.with(mContext).load(this.mData.getJSONObject(position).get("pic").toString()).into(holder.friendcom_pic);
             if(this.mData.getJSONObject(position).get("flag").toString().equals("1"))
             {
-                holder.friendcom_zan_btn.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.ic_like));
+                holder.friendcom_zan_btn.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like));
             }
             else
             {
-                holder.friendcom_zan_btn.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.ic_praise));
+                holder.friendcom_zan_btn.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_praise));
             }
             
             holder.friendcom_zan_btn.setOnClickListener(new View.OnClickListener() {
@@ -111,13 +111,13 @@ public class RecycleViewFriendCommentAdapter extends RecyclerView.Adapter<Recycl
                                                 try {
                                                     if (finalResult.get("data").equals("1"))
                                                     {
-                                                        holder.friendcom_zan_btn.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.ic_like));
+                                                        holder.friendcom_zan_btn.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like));
                                                         holder.friendcom_zan.setText(String.valueOf(Integer.parseInt( holder.friendcom_zan.getText().toString())+1));
 
                                                     }
                                                     else
                                                     {
-                                                        holder.friendcom_zan_btn.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.ic_praise));
+                                                        holder.friendcom_zan_btn.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_praise));
                                                         holder.friendcom_zan.setText(String.valueOf(Integer.parseInt( holder.friendcom_zan.getText().toString())-1));
                                                     }
 

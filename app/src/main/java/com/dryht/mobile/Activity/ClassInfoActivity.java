@@ -6,37 +6,29 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
-import com.dryht.mobile.Fragment.NavBarFragment;
 import com.dryht.mobile.Fragment.SendCommentFragment;
 import com.dryht.mobile.R;
-import com.dryht.mobile.Util.Lesson;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xuexiang.xui.utils.DensityUtils;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.grouplist.XUICommonListItemView;
 import com.xuexiang.xui.widget.grouplist.XUIGroupListView;
-import com.xuexiang.xui.widget.progress.loading.MiniLoadingView;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -44,17 +36,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.devmeteor.tableview.LessonView;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+/*
+课程信息
+ */
 public class ClassInfoActivity extends AppCompatActivity {
     private XUIGroupListView mGroupListView;
     private TitleBar mTitleBar;
@@ -81,6 +73,9 @@ public class ClassInfoActivity extends AppCompatActivity {
         mTitleBar = findViewById(R.id.classinfotitle);
         mTitleBar.setBackground(getResources().getDrawable(R.color.thiscolor));
         recyclerView = findViewById(R.id.classcomments);
+        //设置顶部导航栏
+        StatusBarUtils.setStatusBarDarkMode(this);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.thiscolor));
         refreshLayout.setOnRefreshListener(new refreshListener());
         refreshLayout.autoRefresh();
         mHandler = new Handler();

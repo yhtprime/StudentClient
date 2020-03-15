@@ -36,10 +36,10 @@ import okhttp3.Response;
 
 public class TabNewFragent extends Fragment {
     View view;
-    String categoryid;
+    int categoryid;
     Handler mHandler = new Handler();
     RecyclerView recyclerView;
-    public TabNewFragent(String categoryid) {
+    public TabNewFragent(int categoryid) {
         this.categoryid= categoryid;
     }
 
@@ -61,7 +61,7 @@ public class TabNewFragent extends Fragment {
     public void onStart() {
         super.onStart();
         OkHttpClient mOkHttpClient=new OkHttpClient();
-        FormBody mFormBody=new FormBody.Builder().add("categoryid",categoryid).build();
+        FormBody mFormBody=new FormBody.Builder().add("categoryid", String.valueOf(categoryid)).build();
         Request mRequest=new Request.Builder()
                 .url(Utils.generalUrl+"getNewsList/")
                 .post(mFormBody)

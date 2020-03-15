@@ -5,12 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.dryht.mobile.R;
-import com.dryht.mobile.Util.Lesson;
+import com.dryht.mobile.Bean.Lesson;
 
 import java.util.List;
 

@@ -47,13 +47,14 @@ public class FriendShareAdapter extends RecyclerView.Adapter<FriendShareAdapter.
     private int mLayoutId;
     private Handler mHandler;
     private SharedPreferences sharedPreferences;
-
-    public FriendShareAdapter(Context context, JSONArray data, int layoutId, android.os.Handler mHandler) {
+    private int flag;
+    public FriendShareAdapter(Context context, JSONArray data, int layoutId, android.os.Handler mHandler,int flag) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mData = data;
         this.mLayoutId = layoutId;
         this.mHandler = mHandler;
+        this.flag = flag;
     }
 
     @Override
@@ -75,11 +76,11 @@ public class FriendShareAdapter extends RecyclerView.Adapter<FriendShareAdapter.
             holder.shareRead.setText("浏览量 "+this.mData.getJSONObject(position).get("read").toString());
             if (this.mData.getJSONObject(position).get("islike").toString().equals("1"))
             {
-                holder.sharebtn_zan.setImageResource(R.drawable.ic_like);
+                holder.sharebtn_zan.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like));
             }
             else
             {
-                holder.sharebtn_zan.setImageResource(R.drawable.ic_praise);
+                holder.sharebtn_zan.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_praise));
             }
             Picasso.with(mContext).load(this.mData.getJSONObject(position).get("pic").toString()).into(holder.sharePic);
             Picasso.with(mContext).load(this.mData.getJSONObject(position).get("image").toString()).into(holder.shareImage);
@@ -97,31 +98,35 @@ public class FriendShareAdapter extends RecyclerView.Adapter<FriendShareAdapter.
 
                 }
             });
-            holder.sharePic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        System.out.println("---------");
-                        Intent intent = new Intent(mContext, InfomationActivity.class);
-                        intent.putExtra("circleid",mData.getJSONObject(position).get("circleid").toString());
-                        mContext.startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            if(flag!=2)
+            {
+                holder.sharePic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            System.out.println("---------");
+                            Intent intent = new Intent(mContext, InfomationActivity.class);
+                            intent.putExtra("circleid",mData.getJSONObject(position).get("circleid").toString());
+                            mContext.startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
-            holder.shareName.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        Intent intent = new Intent(mContext, InfomationActivity.class);
-                        intent.putExtra("circleid",mData.getJSONObject(position).get("circleid").toString());
-                        mContext.startActivity(intent);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                });
+                holder.shareName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            Intent intent = new Intent(mContext, InfomationActivity.class);
+                            intent.putExtra("circleid",mData.getJSONObject(position).get("circleid").toString());
+                            mContext.startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
+            }
+
             holder.sharebtn_zan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -152,13 +157,13 @@ public class FriendShareAdapter extends RecyclerView.Adapter<FriendShareAdapter.
                                             try {
                                                 if (finalResult.get("data").equals("1"))
                                                 {
-                                                    holder.sharebtn_zan.setBackground(mContext.getResources().getDrawable(R.drawable.ic_like));
+                                                    holder.sharebtn_zan.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_like));
                                                     holder.shareZan.setText(String.valueOf(Integer.parseInt( holder.shareZan.getText().toString())+1));
 
                                                 }
                                                 else
                                                 {
-                                                    holder.sharebtn_zan.setBackground(mContext.getResources().getDrawable(R.drawable.ic_praise));
+                                                    holder.sharebtn_zan.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_praise));
                                                     holder.shareZan.setText(String.valueOf(Integer.parseInt( holder.shareZan.getText().toString())-1));
                                                 }
 
