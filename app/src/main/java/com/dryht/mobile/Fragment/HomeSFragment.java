@@ -39,6 +39,8 @@ import com.dryht.mobile.Activity.TabNewActivity;
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 
 import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
+import com.dryht.mobile.Bean.Check;
+import com.dryht.mobile.Bean.Class;
 import com.dryht.mobile.Bean.local;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.Utils;
@@ -88,6 +90,8 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
     private TextView moreviews;
     private ImageView weather;
     private local location;
+    private Check check;
+    private Class aClass;
     public HomeSFragment() {
         // Required empty public constructor
     }
@@ -224,25 +228,20 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                     {
                         result = (JSONObject) result.get("data");
                         final JSONObject finalResult = result;
+                        aClass = new Class(finalResult.getString("classid"),finalResult.getString("place"),finalResult.getString("name"),
+                                finalResult.getString("tname"),finalResult.getString("time"));
+                        result = null;
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    System.out.println("**************************");
-                                    System.out.println(finalResult);
-                                    System.out.println("**************************");
-                                    class_place.setText(finalResult.getString("place"));
-                                    course_name.setText(finalResult.getString("name"));
-                                    teacher_name.setText(finalResult.getString("tname"));
-                                    time.setText(finalResult.getString("time"));
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
+                                    class_place.setText(aClass.getPlace());
+                                    course_name.setText(aClass.getName());
+                                    teacher_name.setText(aClass.getTeachname());
+                                    time.setText(aClass.getTime());
                             }
                         }, 0);
                                     OkHttpClient mOkHttpClient=new OkHttpClient();
-                                    FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("classid",finalResult.getString("classid")).build();
+                                    FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("classid", String.valueOf(aClass.getClassid())).build();
                                     Request mRequest=new Request.Builder()
                                             .url(Utils.generalUrl+"getTeacherCheck/")
                                             .post(mFormBody)
@@ -255,86 +254,65 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                             JSONObject result = null;
                                             try {
                                                 result = new JSONObject(response.body().string());
+                                                check = new Check(Integer.parseInt(result.get("status").toString()),result.get("result").toString());
                                                 //没有开启考勤
-                                                if(result.get("status").equals("0")) {
+                                                if(check.getStatus()==0) {
                                                     final JSONObject finalResult = result;
                                                     mHandler.postDelayed(new Runnable() {
                                                         @Override
                                                         public void run() {
                                                             checkbtn.setEnabled(false);
-//                                                            try {
                                                                 check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
-//                                                                class_place.setText("");
-//                                                                course_name.setText("");
-//                                                                time.setText("");
-//                                                                class_place.setVisibility(View.INVISIBLE);
-//                                                                course_name.setVisibility(View.INVISIBLE);
-//                                                                check_btn_text.setVisibility(View.INVISIBLE);
-//                                                                time.setVisibility(View.INVISIBLE);
-//                                                                teacher_name.setText(finalResult.get("result").toString());
-//                                                            } catch (JSONException e) {
-//                                                                e.printStackTrace();
-//                                                            }
                                                         }
                                                     }, 0);
                                                 }
                                                 //需要考勤
-                                                else if(result.get("status").equals("1")) {
-                                                    final JSONObject finalResult = result;
+                                                else if(check.getStatus()==1) {
                                                     mHandler.postDelayed(new Runnable() {
                                                         @Override
                                                         public void run() {
                                                             checkbtn.setEnabled(false);
-                                                            try {
                                                                 check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_green_400));
-                                                                check_btn_text.setText(finalResult.get("result").toString());
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
+                                                                check_btn_text.setText(check.getResult());
                                                         }
                                                     }, 0);
                                                 }
                                                 //已考勤
-                                                else if(result.get("status").equals("2")) {
+                                                else if(check.getStatus()==2) {
                                                     final JSONObject finalResult1 = result;
                                                     mHandler.postDelayed(new Runnable() {
                                                         @Override
                                                         public void run() {
                                                             checkbtn.setEnabled(true);
-                                                            try {
-                                                                check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_red_300));
-                                                                check_btn_text.setText(finalResult1.get("result").toString());
-                                                                //签到按钮
-                                                                checkbtn.setOnClickListener(new View.OnClickListener() {
-                                                                    @Override
-                                                                    public void onClick(View v) {
-                                                                        getlocal();
-                                                                        if(location.getLongitude()>121.541148&&location.getLongitude()<121.54556&&location.getLatitude()>38.894071&&location.getLatitude()<38.899271)
-                                                                        {
-                                                                            XToastUtils.error("您的未到达教室");
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            //创建Intent对象
-                                                                            Intent intent=new Intent();
-                                                                            //将参数放入intent
-                                                                            intent.putExtra("flag", 1);
-                                                                            try {
-                                                                                intent.putExtra("classid",finalResult.getString("classid"));
-                                                                            } catch (JSONException e) {
-                                                                                e.printStackTrace();
-                                                                            }
-                                                                            //跳转到指定的Activity
-                                                                            intent.setClass(getContext(), FdActivity.class);
-                                                                            //启动Activity
-                                                                            startActivity(intent);
-                                                                        }
-
+                                                            check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_red_300));
+                                                            check_btn_text.setText(check.getResult());
+                                                            //签到按钮
+                                                            checkbtn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    getlocal();
+                                                                    if(location.getLongitude()>121.541148&&location.getLongitude()<121.54556&&location.getLatitude()>38.894071&&location.getLatitude()<38.899271)
+                                                                    {
+                                                                        //创建Intent对象
+                                                                        Intent intent=new Intent();
+                                                                        //将参数放入intent
+                                                                        intent.putExtra("flag", 1);
+                                                                        if (aClass.getClassid()>0)
+                                                                        intent.putExtra("classid",String.valueOf(aClass.getClassid()));
+                                                                    System.out.println("--------------------------------------------------");
+                                                                        System.out.println(aClass.getClassid());
+                                                                    System.out.println("--------------------------------------------------");
+                                                                    //跳转到指定的Activity
+                                                                        intent.setClass(getContext(), FdActivity.class);
+                                                                        //启动Activity
+                                                                        startActivity(intent);
                                                                     }
-                                                                });
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
+                                                                    else
+                                                                    {
+                                                                        XToastUtils.error("您的未到达教室");
+                                                                    }
+                                                                }
+                                                            });
                                                         }
                                                     }, 0);
                                                 }

@@ -14,7 +14,9 @@ import com.dryht.mobile.Bean.Lesson;
 import java.util.List;
 
 public class ListViewSearchClassAdapter extends ArrayAdapter {
-
+    private Lesson lesson; // 获取当前项的Fruit实例
+    private View view;
+    private ViewHolder viewHolder;
     private int resourceId;
 
     public ListViewSearchClassAdapter(Context context, int textViewResourceId, List<Lesson> className) {
@@ -23,9 +25,7 @@ public class ListViewSearchClassAdapter extends ArrayAdapter {
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Lesson lesson = (Lesson) getItem(position); // 获取当前项的Fruit实例
-        View view;
-        ViewHolder viewHolder;
+        lesson = (Lesson) getItem(position); // 获取当前项的Fruit实例
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new ViewHolder();

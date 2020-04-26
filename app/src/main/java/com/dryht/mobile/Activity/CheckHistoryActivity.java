@@ -85,14 +85,17 @@ public class CheckHistoryActivity extends AppCompatActivity {
                             public void run() {
                                 for (int i = 0; i < finalResult.length(); i++) {
                                     try {
-                                        Check c = new Check(finalResult.getJSONObject(i).getInt("checkid"), Timestamp.valueOf(finalResult.getJSONObject(i).getString("time")),finalResult.getJSONObject(i).getString("name")
-                                        ,finalResult.getJSONObject(i).getInt("teacherid"),finalResult.getJSONObject(i).getInt("classid"),finalResult.getJSONObject(i).getInt("status"));
+                                        Check c = new Check(finalResult.getJSONObject(i).getInt("checkid"),
+                                                Timestamp.valueOf(finalResult.getJSONObject(i).getString("time")),finalResult.getJSONObject(i).getString("name")
+                                                ,finalResult.getJSONObject(i).getInt("teacherid"),finalResult.getJSONObject(i).getInt("classid"),
+                                                finalResult.getJSONObject(i).getInt("status"));
                                         checks.add(c);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
-                                RecycleViewCheckHistoryAdapter r = new RecycleViewCheckHistoryAdapter(CheckHistoryActivity.this,checks,R.layout.adapter_recycle_view_checkhistory_item);
+                                RecycleViewCheckHistoryAdapter r = new RecycleViewCheckHistoryAdapter
+                                        (CheckHistoryActivity.this,checks,R.layout.adapter_recycle_view_checkhistory_item);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(CheckHistoryActivity.this));
                                 recyclerView.setAdapter(r);
                             }

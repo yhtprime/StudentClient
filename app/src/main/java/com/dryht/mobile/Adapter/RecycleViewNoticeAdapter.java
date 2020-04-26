@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dryht.mobile.Activity.NoticeInfoActivity;
+import com.dryht.mobile.Bean.Notice;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Util.OnRecyclerItemClickListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -21,16 +22,18 @@ import com.xuexiang.xui.widget.imageview.RadiusImageView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.List;
+
 public class RecycleViewNoticeAdapter extends RecyclerView.Adapter<RecycleViewNoticeAdapter.Holder> {
 
     private LayoutInflater mInflater;
     private Context mContext;
-    private JSONArray mData;
+    private List<Notice> mData;
     private int mLayoutId;
 //声明自定义的监听接口
 private OnRecyclerItemClickListener monItemClickListener;
 
-public RecycleViewNoticeAdapter(Context context, JSONArray data, int layoutId) {
+public RecycleViewNoticeAdapter(Context context, List<Notice> data, int layoutId) {
         mInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.mData = data;
@@ -45,30 +48,22 @@ public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 @Override
 public void onBindViewHolder(@NonNull Holder holder, int position){
-        try {
-        holder.noticec_name.setText(this.mData.getJSONObject(position).get("cname").toString());
-        holder.notice_time.setText(this.mData.getJSONObject(position).get("date").toString());
-        holder.noticet_name.setText(this.mData.getJSONObject(position).get("tname").toString());
-        holder.notice_intro.setText(this.mData.getJSONObject(position).get("name").toString());
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent intent = new Intent(mContext, NoticeInfoActivity.class);
-                    intent.putExtra("infoid",mData.getJSONObject(position).get("infoid").toString());
-                    mContext.startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        } catch (JSONException e) {
-            e.printStackTrace();
+    holder.noticec_name.setText(this.mData.get(position).getCname());
+    holder.notice_time.setText(this.mData.get(position).getDate().toString());
+    holder.noticet_name.setText(this.mData.get(position).getTname());
+    holder.notice_intro.setText(this.mData.get(position).getName());
+    holder.cardView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+                Intent intent = new Intent(mContext, NoticeInfoActivity.class);
+                intent.putExtra("infoid",mData.get(position).getInfoid());
+                mContext.startActivity(intent);
         }
+    });
 }
 @Override
 public int getItemCount() {
-        return mData.length();
+        return mData.size();
         }
 
 

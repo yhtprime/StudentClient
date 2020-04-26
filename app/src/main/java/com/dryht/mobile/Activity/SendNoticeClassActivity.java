@@ -68,13 +68,17 @@ public class SendNoticeClassActivity extends AppCompatActivity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(title.getText().toString()==null)
+                System.out.println(title.getText().toString());
+                System.out.println(intro.getContentText());
+                if(title.getText().toString()==null||title.getText().toString().equals(""))
                 {
                     XToastUtils.error("请输入主题");
+                    return;
                 }
-                else if(intro.getContentText()==null)
+                else if(intro.getContentText()==null||intro.getContentText().equals(""))
                 {
                     XToastUtils.error("请输入内容");
+                    return;
                 }
                 else {
                     OkHttpClient mOkHttpClient=new OkHttpClient();
@@ -94,7 +98,6 @@ public class SendNoticeClassActivity extends AppCompatActivity {
                             JSONObject result = null;
                             try {
                                 result = new JSONObject(response.body().string());
-                                System.out.println(result.get("status"));
                                 //取数据
                                 if(result.get("status").equals("1"))
                                 {

@@ -19,6 +19,7 @@ public class Check {
     private int teacherid;
     private int classid;
     private int status;
+    private String result;
 
     public Check(int checkid,Timestamp time,String name,int teacherid,int classid,int status){
         this.checkid = checkid;
@@ -27,6 +28,15 @@ public class Check {
         this.teacherid = teacherid;
         this.classid =classid;
         this.status = status;
+    }
+
+    public Check(int status) {
+        this.status = status;
+    }
+
+    public Check(int status, String result) {
+        this.status = status;
+        this.result = result;
     }
 
     public int getCheckid() {
@@ -75,5 +85,13 @@ public class Check {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 }

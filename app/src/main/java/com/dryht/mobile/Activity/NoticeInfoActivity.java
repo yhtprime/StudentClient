@@ -46,7 +46,7 @@ import okhttp3.Response;
  */
 public class NoticeInfoActivity extends AppCompatActivity {
     private TitleBar titleBar;
-    private String infoid;
+    private int infoid;
     private TextView notice_title,notice_teacher,notice_time,noticeintro;
     private Button notice_check_btn;
     private SharedPreferences sharedPreferences;
@@ -59,7 +59,7 @@ public class NoticeInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_info);
-        infoid = getIntent().getStringExtra("infoid");
+        infoid = getIntent().getIntExtra("infoid",0);
         sharedPreferences = getSharedPreferences("data", Context.MODE_PRIVATE);
         recyclerView = findViewById(R.id.noticeinfo_recycle);
         //设置顶部导航栏
@@ -87,7 +87,7 @@ public class NoticeInfoActivity extends AppCompatActivity {
         FormBody mFormBody= null;
         Request mRequest = null;
         String circommonid = null;
-        mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("infoid",infoid ).build();
+        mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("infoid", String.valueOf(infoid)).build();
         mRequest=new Request.Builder().url(Utils.generalUrl+"gettnoticeinfo/").post(mFormBody).build();
         mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
             @Override
@@ -175,7 +175,7 @@ public class NoticeInfoActivity extends AppCompatActivity {
         FormBody mFormBody= null;
         Request mRequest = null;
         String circommonid = null;
-        mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("infoid",infoid ).build();
+        mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("infoid", String.valueOf(infoid)).build();
         mRequest=new Request.Builder().url(Utils.generalUrl+"getnoticeinfo/").post(mFormBody).build();
         mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
             @Override
@@ -210,7 +210,7 @@ public class NoticeInfoActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onClick(View v) {
                                                     OkHttpClient mOkHttpClient=new OkHttpClient();
-                                                    FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("infoid",infoid ).build();
+                                                    FormBody mFormBody=new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("infoid", String.valueOf(infoid)).build();
                                                     Request mRequest=new Request.Builder()
                                                             .url(Utils.generalUrl+"checknotice/")
                                                             .post(mFormBody)
@@ -285,6 +285,5 @@ public class NoticeInfoActivity extends AppCompatActivity {
         notice_time = findViewById(R.id.notice_time);
         noticeintro = findViewById(R.id.noticeintro);
         notice_check_btn = findViewById(R.id.notice_check_btn);
-
     }
 }

@@ -108,8 +108,6 @@ public class ClassFragment extends Fragment {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                XToastUtils.toast("点击了"+query);
-                //点击搜索
                 return false;
             }
 

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dryht.mobile.Adapter.ListViewSearchClassAdapter;
 import com.dryht.mobile.Adapter.RecycleViewNoticeAdapter;
+import com.dryht.mobile.Bean.Notice;
 import com.dryht.mobile.R;
 import com.dryht.mobile.Bean.Lesson;
 import com.dryht.mobile.Util.Utils;
@@ -54,7 +55,7 @@ public class NoticeFragment extends Fragment{
     private androidx.appcompat.widget.SearchView mSearchView;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
-
+    private List<Notice> notices = new ArrayList<>();
     public NoticeFragment() {
         // Required empty public constructor
     }
@@ -116,12 +117,17 @@ public class NoticeFragment extends Fragment{
                     //取数据
                     if(result.get("status").equals("1"))
                     {
+                        notices = new ArrayList<>();
                         jsonArray = new JSONArray(result.get("data").toString());
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            notices.add(new Notice(jsonArray.getJSONObject(i).getInt("infoid"),jsonArray.getJSONObject(i).get("cname").toString(),jsonArray.getJSONObject(i).get("date").toString(),jsonArray.getJSONObject(i).get("tname").toString(),jsonArray.getJSONObject(i).get("name").toString(),jsonArray.getJSONObject(i).get("intro").toString()));
+                        }
                         //挂起
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                RecycleViewNoticeAdapter adapter = new RecycleViewNoticeAdapter(getContext(),jsonArray,R.layout.adapter_recycle_view_notice_item);
+                                recyclerView.setAdapter(null);
+                                RecycleViewNoticeAdapter adapter = new RecycleViewNoticeAdapter(getContext(),notices,R.layout.adapter_recycle_view_notice_item);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(adapter);
                             }
@@ -143,7 +149,6 @@ public class NoticeFragment extends Fragment{
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                XToastUtils.toast("点击了" + query);
                 //点击搜索
                 return false;
             }
@@ -207,11 +212,16 @@ public class NoticeFragment extends Fragment{
                                                                 if(result.get("status").equals("1"))
                                                                 {
                                                                     jsonArray = new JSONArray(result.get("data").toString());
+                                                                    notices = new ArrayList<>();
+                                                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                                                        notices.add(new Notice(jsonArray.getJSONObject(i).getInt("infoid"),jsonArray.getJSONObject(i).get("cname").toString(),jsonArray.getJSONObject(i).get("date").toString(),jsonArray.getJSONObject(i).get("tname").toString(),jsonArray.getJSONObject(i).get("name").toString(),jsonArray.getJSONObject(i).get("intro").toString()));
+                                                                    }
                                                                     //挂起
                                                                     mHandler.postDelayed(new Runnable() {
                                                                         @Override
                                                                         public void run() {
-                                                                            RecycleViewNoticeAdapter adapter = new RecycleViewNoticeAdapter(getContext(),jsonArray,R.layout.adapter_recycle_view_notice_item);
+                                                                            recyclerView.setAdapter(null);
+                                                                            RecycleViewNoticeAdapter adapter = new RecycleViewNoticeAdapter(getContext(),notices,R.layout.adapter_recycle_view_notice_item);
                                                                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                                                             recyclerView.setAdapter(adapter);
                                                                         }

@@ -1,7 +1,5 @@
 package com.dryht.mobile.Bean;
 
-import java.sql.Timestamp;
-
 public class Class {
     private int classid;
     private String name;
@@ -9,11 +7,35 @@ public class Class {
     private int status;
     private int courseid;
     private String place;
-    private Timestamp time;
+    private String time;
     private int count;
     private int teacherid;
     private String weekday;
     private String total;
+    private String teachname;
+
+    public Class(String classid, String place, String name, String tname, String time) {
+        this.classid = Integer.parseInt(classid);
+        this.place = place;
+        this.name = name;
+        this.teachname = tname;
+        this.time = time;
+    }
+
+    public Class(String classid, String place, String name, String time) {
+        this.classid = Integer.parseInt(classid);
+        this.place = place;
+        this.name = name;
+        this.time = time;
+    }
+
+    public String getTeachname() {
+        return teachname;
+    }
+
+    public void setTeachname(String teachname) {
+        this.teachname = teachname;
+    }
 
     public int getClassid() {
         return classid;
@@ -63,11 +85,11 @@ public class Class {
         this.place = place;
     }
 
-    public Timestamp getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Timestamp time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

@@ -1,6 +1,7 @@
 package com.dryht.mobile.Fragment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -29,7 +30,10 @@ import com.dryht.mobile.Adapter.RecycleViewCheckInfoAdapter;
 import com.dryht.mobile.Adapter.RecyclerViewBannerAdapter;
 
 import com.dryht.mobile.Adapter.RecyclerViewCommentAdapter;
+import com.dryht.mobile.Bean.Check;
+import com.dryht.mobile.Bean.Class;
 import com.dryht.mobile.R;
+import com.dryht.mobile.Util.TokenUtils;
 import com.dryht.mobile.Util.Utils;
 import com.dryht.mobile.utils.XToastUtils;
 import com.github.mikephil.charting.components.Description;
@@ -40,6 +44,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.xuexiang.xui.widget.actionbar.TitleBar;
 import com.xuexiang.xui.widget.banner.recycler.BannerLayout;
 import com.xuexiang.xui.widget.button.RippleView;
+import com.xuexiang.xui.widget.dialog.DialogLoader;
 import com.xuexiang.xui.widget.textview.MarqueeTextView;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -79,7 +84,8 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
     private ConstraintLayout constraintLayout;
     private TextView moreviews;
     private ImageView weather;
-
+    private Check check;
+    private Class aClass;
     public HomeTFragment() {
         // Required empty public constructor
     }
@@ -202,26 +208,22 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
                     {
                         result = (JSONObject) result.get("data");
                         final JSONObject finalResult = result;
+                        aClass = new Class(finalResult.getString("classid"),finalResult.getString("place"),finalResult.getString("name"),finalResult.getString("time"));
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                try {
-                                    class_place.setText(finalResult.getString("place"));
-                                    course_name.setText(finalResult.getString("name"));
-                                    time.setText(finalResult.getString("time"));
-                                    if (finalResult.getString("classid").equals("0"))
+                                    class_place.setText(aClass.getPlace());
+                                    course_name.setText(aClass.getName());
+                                    time.setText(aClass.getTime());
+                                    if (aClass.getClassid()==0)
                                     {
                                         checkbtn.setEnabled(false);
                                         check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
-                                        check_btn_text.setText("今天没有课程哦");
+                                        check_btn_text.setText("今天没有课程");
                                     }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
                             }
                         }, 0);
-                        if (!finalResult.getString("classid").equals("0"))
+                        if (!(aClass.getClassid()==0))
                         {
                             OkHttpClient mOkHttpClient=new OkHttpClient();
                             FormBody mFormBody=new FormBody.Builder().add("identity",sharedPreferences.getString("identity",null)).add("auth",sharedPreferences.getString("auth",null)).add("classid",finalResult.getString("classid")).build();
@@ -237,59 +239,74 @@ public class HomeTFragment extends Fragment implements View.OnClickListener {
                                     JSONObject result = null;
                                     try {
                                         result = new JSONObject(response.body().string());
+                                        check = new Check(Integer.parseInt(result.get("status").toString()),result.get("result").toString());
                                         //没有开启考勤
-                                        if(result.get("status").equals("0")) {
+                                        if(check.getStatus()==0) {
                                             mHandler.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
                                                     checkbtn.setEnabled(true);
                                                     check_btn_text.setBackgroundColor(getResources().getColor(R.color.md_green_400));
                                                     check_btn_text.setText("您可以开启考勤");
-                                                    checkbtn.setOnClickListener((v -> {
-                                                        OkHttpClient mOkHttpClient=new OkHttpClient();
-                                                        FormBody mFormBody= null;
-                                                        Request mRequest = null;
-                                                        try {
-                                                            mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("classid",finalResult.get("classid").toString() ).build();
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                        mRequest=new Request.Builder().url(Utils.generalUrl+"startCheck/").post(mFormBody).build();
-                                                        mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
-                                                            @Override
-                                                            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
-                                                                //String转JSONObject
-                                                                JSONObject result = null;
-                                                                try {
-                                                                    result = new JSONObject(response.body().string());
-                                                                    //取数据
-                                                                    if(result.get("status").equals("1"))
-                                                                    {
-                                                                        mHandler.postDelayed(new Runnable() {
+                                                    checkbtn.setOnClickListener(v->{
+                                                        DialogLoader.getInstance().showConfirmDialog(
+                                                                getContext(),
+                                                                getString(R.string.lab_check_confirm),
+                                                                getString(R.string.lab_yes),
+                                                                new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                        dialog.dismiss();
+                                                                        OkHttpClient mOkHttpClient=new OkHttpClient();
+                                                                        FormBody mFormBody= null;
+                                                                        Request mRequest = null;
+                                                                        mFormBody = new FormBody.Builder().add("auth",sharedPreferences.getString("auth",null)).add("identity",sharedPreferences.getString("identity",null)).add("classid", String.valueOf(aClass.getClassid())).build();
+                                                                        mRequest=new Request.Builder().url(Utils.generalUrl+"startCheck/").post(mFormBody).build();
+                                                                        mOkHttpClient.newCall(mRequest).enqueue(new Callback(){
                                                                             @Override
-                                                                            public void run() {
-                                                                                checkbtn.setEnabled(false);
-                                                                                check_btn_text.setBackgroundColor(getResources().getColor(R.color.xui_config_color_gray_3));
-                                                                                check_btn_text.setText("您已经开启了考勤");
+                                                                            public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                                                                                //String转JSONObject
+                                                                                JSONObject result = null;
+                                                                                try {
+                                                                                    result = new JSONObject(response.body().string());
+                                                                                    //取数据
+                                                                                    if(result.get("status").equals("1"))
+                                                                                    {
+                                                                                        mHandler.postDelayed(new Runnable() {
+                                                                                            @Override
+                                                                                            public void run() {
+                                                                                                checkbtn.setEnabled(false);
+                                                                                                check_btn_text.setBackgroundColor
+                                                                                                        (getResources().getColor(R.color.xui_config_color_gray_3));
+                                                                                                check_btn_text.setText("您已经开启了考勤");
+                                                                                            }
+                                                                                        }, 0);
+                                                                                    }
+                                                                                } catch (JSONException e) {
+                                                                                    e.printStackTrace();
+                                                                                }
                                                                             }
-                                                                        }, 0);
+                                                                            @Override
+                                                                            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                                                                                XToastUtils.toast("获取课程表失败");
+                                                                            }
+                                                                        });
                                                                     }
-                                                                } catch (JSONException e) {
-                                                                    e.printStackTrace();
+                                                                },
+                                                                getString(R.string.lab_no),
+                                                                new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                        dialog.dismiss();
+                                                                    }
                                                                 }
-                                                            }
-                                                            @Override
-                                                            public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
-                                                                XToastUtils.toast("获取课程表失败");
-                                                            }
-                                                        });
-                                                    }));
+                                                        );
+                                                    });
                                                 }
                                             }, 0);
                                         }
                                         //需要考勤
-                                        else if(result.get("status").equals("1")) {
-                                            final JSONObject finalResult = result;
+                                        else if(check.getStatus()==1) {
                                             mHandler.postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {

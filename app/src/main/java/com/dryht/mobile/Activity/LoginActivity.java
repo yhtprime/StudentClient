@@ -11,8 +11,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.telecom.Call;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initcomponent();
+        checkPermission();
 
         // 在要调用权限的activity中插入该方法。可以写到onCreate()中。
     // 版本判断。当手机系统大于 23 时，才有必要去判断权限是否获取
@@ -98,6 +102,27 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkPermission() {
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            int write = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            int read = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            if (write != PackageManager.PERMISSION_GRANTED || read != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, 300);
+            } else {
+                String name = "CrashDirectory";
+                File file1 = new File(Environment.getExternalStorageDirectory(), name);
+                if (file1.mkdirs()) {
+                    Log.i("wytings", "permission -------------> " + file1.getAbsolutePath());
+                } else {
+                    Log.i("wytings", "permission -------------fail to make file ");
+                }
+            }
+        } else {
+            Log.i("wytings", "------------- Build.VERSION.SDK_INT < 23 ------------");
+        }
     }
 
     private void initcomponent(){

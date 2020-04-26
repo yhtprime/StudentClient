@@ -77,31 +77,20 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     private Handler mHandler;
 
     private CascadeClassifier mFrontalFaceClassifier = null; //正脸 级联分类器
-    private CascadeClassifier mProfileFaceClassifier = null; //侧脸 级联分类器
 
-    //存储人脸
-    private Map<String,Bitmap> bitmaps;
     //文件名/文件
     private ArrayList<String> filename = new ArrayList<>();
     private ArrayList<String> file = new ArrayList<>();
-    //显示是录制还是识别
+    //录制/识别判断标识
     private int limit = 0;
     //考勤的课程
     private String classid;
     private String account;
     private String passwd;
-    private Rect[] mFrontalFacesArray;
-    private Rect[] mProfileFacesArray;
-    //保留正脸数据用于分析性别和年龄
-    private Rect[] mTempFrontalFacesArray;
 
     private Mat mRgba; //图像容器
     private Mat mGray;
     private TextView hint;
-
-
-    private int mFrontFaces = 0;
-    private int mProfileFaces = 0;
 
 
     //记录的时间，秒级别
@@ -112,14 +101,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     private long mCurrentTime = 0;
     //当前的时间，毫秒级别
     private long mMilliCurrentTime = 0;
-    //观看时间
-    private int mWatchTheTime = 0;
 
-
-    //设置检测区域
-    private Size m55Size = new Size(55, 55);
-    private Size m65Size = new Size(65, 65);
-    private Size mDefault = new Size();
     //解决横屏问题
     private Mat Matlin;
     private Mat gMatlin;
@@ -195,7 +177,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         int numCameras = Camera.getNumberOfCameras();
         for (int i = 0; i < numCameras; i++) {
             Camera.getCameraInfo(i, info);
-            Log.v("yaoxumin", "在 CameraRenderer 类的 openCamera 方法 中执行了开启摄像 Camera.open 方法,cameraId:" + i);
+            Log.v("notice", "在 CameraRenderer 类的 openCamera 方法 中执行了开启摄像 Camera.open 方法,cameraId:" + i);
             camerId = i;
             break;
         }
@@ -210,7 +192,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
      */
     protected void initOpencv() {
         initFrontalFace();
-        //initProfileFace();
         // 显示
         openCvCameraView.enableView();
     }
@@ -238,28 +219,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         }
     }
 
-    /**
-     * @Description 初始化侧脸分类器
-     */
-    public void initProfileFace() {
-        try {
-            InputStream is = getResources().openRawResource(R.raw.haarcascade_profileface); //OpenCV的人脸模型文件： lbpcascade_frontalface_improved
-            File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-            File mCascadeFile = new File(cascadeDir, "haarcascade_profileface.xml");
-            FileOutputStream os = new FileOutputStream(mCascadeFile);
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = is.read(buffer)) != -1) {
-                os.write(buffer, 0, bytesRead);
-            }
-            is.close();
-            os.close();
-            // 加载 侧脸分类器
-            mProfileFaceClassifier = new CascadeClassifier(mCascadeFile.getAbsolutePath());
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-    }
+
 
     @Override
     public void onCameraViewStarted(int width, int height) {
@@ -281,7 +241,7 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
     }
 
     /**
-     * @Description 在这里实现人脸检测和性别年龄识别
+     * @Description 在这里实现人脸检测
      */
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
@@ -350,11 +310,11 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                         builder.addFormDataPart("auth",sharedPreferences.getString("auth","0"));
                         builder.addFormDataPart("identity",sharedPreferences.getString("identity","0"));
                         if(classid!=null)
-                        builder.addFormDataPart("classid",classid);
+                            builder.addFormDataPart("classid",classid);
                         if(passwd!=null)
-                        builder.addFormDataPart("passwd",passwd);
+                            builder.addFormDataPart("passwd",passwd);
                         if(account!=null)
-                        builder.addFormDataPart("account",account);
+                            builder.addFormDataPart("account",account);
                         Request mRequest=new Request.Builder()
                                 .url(com.dryht.mobile.Util.Utils.generalUrl+baseUrl)
                                 .post(builder.build())
@@ -402,11 +362,10 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                                 Looper.loop();
 
                             }
-
                             @Override
                             public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
                                 Looper.prepare();
-                                Toast.makeText(FdActivity.this,"登录失败",Toast.LENGTH_LONG).show();
+                                Toast.makeText(FdActivity.this,"录制失败",Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             }
                         });
@@ -440,7 +399,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
                 //创建文件夹
                 img.createNewFile();
                 System.out.println(img.exists());
-                System.out.println("***********************************************");System.out.print("***********************************************");
             }
             fileOutputStream = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath()+"/smartass/"+q+".jpeg");
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
@@ -458,7 +416,6 @@ public class FdActivity extends Activity implements CameraBridgeViewBase.CvCamer
         }
     }
     private void checkPermission() {
-
         if (Build.VERSION.SDK_INT >= 23) {
             int write = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             int read = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);

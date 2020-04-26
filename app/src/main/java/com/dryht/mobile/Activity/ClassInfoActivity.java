@@ -137,14 +137,45 @@ public class ClassInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
-        if (sharedPreferences.getString("identity",null).equals("0"))
-        {
-            mTitleBar.addAction(new TitleBar.TextAction("发送消息") {
+        if (sharedPreferences.getString("identity",null).equals("0")) {
+            OkHttpClient mOkHttpClient = new OkHttpClient();
+            FormBody mFormBody = new FormBody.Builder().add("classid", classid).add("auth",sharedPreferences.getString("auth",null)).build();
+            Request mRequest = new Request.Builder()
+                    .url(Utils.generalUrl + "isMyClass/")
+                    .post(mFormBody)
+                    .build();
+
+            mOkHttpClient.newCall(mRequest).enqueue(new Callback() {
                 @Override
-                public void performAction(View view) {
-                    Intent intent = new Intent(ClassInfoActivity.this,SendNoticeClassActivity.class);
-                    intent.putExtra("classid",classid);
-                    startActivity(intent);
+                public void onResponse(@NotNull okhttp3.Call call, @NotNull Response response) throws IOException {
+                    //String转JSONObject
+                    JSONObject result = null;
+                    try {
+                        result = new JSONObject(response.body().string());
+                        //取数据
+                        if (result.get("status").equals("1")) {
+                            mHandler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mTitleBar.addAction(new TitleBar.TextAction("发送消息") {
+                                        @Override
+                                        public void performAction(View view) {
+                                            Intent intent = new Intent(ClassInfoActivity.this, SendNoticeClassActivity.class);
+                                            intent.putExtra("classid", classid);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }
+                            }, 0);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NotNull okhttp3.Call call, @NotNull IOException e) {
+                    XToastUtils.toast("失败");
                 }
             });
         }
