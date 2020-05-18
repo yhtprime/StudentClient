@@ -48,12 +48,12 @@ public class RecycleViewCheckInfoAdapter extends RecyclerView.Adapter<RecycleVie
         holder.checkinfo_name.setText(this.mData.get(position).getName());
         if (this.mData.get(position).getStatus()==1)
         {
-            holder.checkinfo_status.setText("已考勤");
+            holder.checkinfo_status.setText("确认");
             holder.checkinfo_status.setTextColor(mContext.getResources().getColor(R.color.md_green_300));
         }
         else
         {
-            holder.checkinfo_status.setText("未考勤");
+            holder.checkinfo_status.setText("未确认");
             holder.checkinfo_status.setTextColor(mContext.getResources().getColor(R.color.md_red_300));
         }
         Picasso.with(mContext).load(this.mData.get(position).getHeadpic()).into(holder.checkinfo_pic);

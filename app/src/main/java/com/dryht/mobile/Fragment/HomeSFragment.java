@@ -291,26 +291,23 @@ public class HomeSFragment extends Fragment implements View.OnClickListener {
                                                                 @Override
                                                                 public void onClick(View v) {
                                                                     getlocal();
-                                                                    if(location.getLongitude()>121.541148&&location.getLongitude()<121.54556&&location.getLatitude()>38.894071&&location.getLatitude()<38.899271)
-                                                                    {
+//                                                                    if(location.getLongitude()>121.541148&&location.getLongitude()<121.54556&&location.getLatitude()>38.894071&&location.getLatitude()<38.899271)
+//                                                                    {
                                                                         //创建Intent对象
                                                                         Intent intent=new Intent();
                                                                         //将参数放入intent
                                                                         intent.putExtra("flag", 1);
                                                                         if (aClass.getClassid()>0)
                                                                         intent.putExtra("classid",String.valueOf(aClass.getClassid()));
-                                                                    System.out.println("--------------------------------------------------");
-                                                                        System.out.println(aClass.getClassid());
-                                                                    System.out.println("--------------------------------------------------");
-                                                                    //跳转到指定的Activity
+                                                                        //跳转到指定的Activity
                                                                         intent.setClass(getContext(), FdActivity.class);
                                                                         //启动Activity
                                                                         startActivity(intent);
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        XToastUtils.error("您的未到达教室");
-                                                                    }
+//                                                                    }
+//                                                                    else
+//                                                                    {
+//                                                                        XToastUtils.error("您的未到达教室");
+//                                                                    }
                                                                 }
                                                             });
                                                         }
